@@ -1,20 +1,30 @@
-//-----Frontend Ingredients API-----//
-// import sendRequest from './send-request'
+import sendRequest from './send-request'
 
-// const BASE_URL = "/api/ingredients"
+import axios from 'axios';
+axios.defaults.withCredentials = true;
 
-// export async function show() {
-//     return sendRequest(BASE_URL, "GET")
-// }
+const BASE_URL = "/tennis/matches/"
+
+export async function show() {
+    return sendRequest(BASE_URL, "GET")
+}
+    // const response = await axios.get(BASE_URL,
+    //     {'withCredentials': true });
+    // console.log(response)
+    // console.log(response.data);
+    // return response
+
+
+
 
 // export async function create(ingredientData) {
-//     return sendRequest(BASE_URL + "/new", "POST", ingredientData)
+//     return sendRequest(BASE_URL, "POST", matchData)
 // }
 
 // export async function remove(ingredientId) {
-//     return sendRequest(`${BASE_URL}/${ingredientId}`, "DELETE")
+//     return sendRequest(`${BASE_URL}${matchId}`, "DELETE")
 // }
 
 // export async function update(ingredientId, ingredientData) {
-//     return sendRequest(`${BASE_URL}/${ingredientId}`, "PATCH", ingredientData)
+//     return sendRequest(`${BASE_URL}${matchId}`, "PATCH", matchData)
 // }

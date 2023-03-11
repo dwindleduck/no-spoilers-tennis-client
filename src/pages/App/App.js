@@ -1,16 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+// useEffect
 import { Routes, Route, Navigate } from "react-router-dom";
-
+// Route, Navigate
 import './App.css';
 
 import { getUser } from "../../utilities/users-service";
+import * as matchesAPI from "../../utilities/matches-api"
+
 import AuthPage from "../AuthPage/AuthPage";
+import MatchList from "../../components/MatchList/MatchList";
 
 function App() {
-  const [user, setUser] = useState(getUser());
-
-
-
+  const [user, setUser] = useState(getUser())
 
   return (
     <div className="App">
@@ -25,10 +26,10 @@ function App() {
 
             {/* {user.isAdmin && <Route path="/*" element={<Navigate to="/some admin path" />} />} */}
 
-            {/* <Route path="/_______" element={} /> */}
+            <Route path="/matches_component_test" element={<MatchList/>} />
 
             {/* <Route path="/_______" element={} /> */}
-            {/* <Route path="/*" element={<Navigate to="/______" />} /> */}
+            <Route path="/*" element={<Navigate to="/matches_component_test" />} />
           </Routes>
         </>
       ) : (

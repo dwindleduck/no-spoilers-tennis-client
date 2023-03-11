@@ -1,13 +1,16 @@
 import { getToken } from "./users-service"
 
+
+
 const DEV_URL = "http://localhost:8000"
 
 export default async function sendRequest(url, method="GET", payload=null) {
-    const options = { method }
+    const options = { method, credentials: 'include'}
     if (payload) {
         options.headers = { 
             "Accept": "application/json",
-            "Content-Type": "application/json" 
+            "Content-Type": "application/json",
+            // "Access-Control-Allow-Credentials": "true"
         }
         options.body = JSON.stringify(payload)
     }  
@@ -16,7 +19,7 @@ export default async function sendRequest(url, method="GET", payload=null) {
     //if there's a token, include it in req
     if(token) {
         options.headers = options.headers || {}
-        options.headers.Authorization = `Bearer ${token}`
+        options.headers.Authorization = `Token ${token}`
     }
 
     const res = await fetch(DEV_URL + url, options) 

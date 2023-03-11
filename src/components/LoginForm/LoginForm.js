@@ -18,6 +18,7 @@ export default function LoginForm({ setUser }) {
     evt.preventDefault();
     try {
       const user = await usersService.login(credentials);
+      console.log(user)
       setUser(user);
     } catch {
       setError('Log In Failed - Try Again');
