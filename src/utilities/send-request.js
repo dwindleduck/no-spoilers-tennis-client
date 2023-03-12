@@ -1,16 +1,13 @@
 import { getToken } from "./users-service"
 
-
-
 const DEV_URL = "http://localhost:8000"
 
 export default async function sendRequest(url, method="GET", payload=null) {
-    const options = { method, credentials: 'include'}
+    const options = { method }
     if (payload) {
         options.headers = { 
             "Accept": "application/json",
             "Content-Type": "application/json",
-            // "Access-Control-Allow-Credentials": "true"
         }
         options.body = JSON.stringify(payload)
     }  
