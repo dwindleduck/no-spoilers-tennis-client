@@ -2,7 +2,7 @@ export default function MatchDetails({match}) {
 
     return(
         <>
-        <h5>Match:{match.match_id}</h5>
+        <h5>Tournament:{match.competition}</h5>
         <p>Start time: {match.date_time}</p>
         <p>{match.T1name} v {match.T2name}</p>
         <p>Set Score: {match.T1SetScore} - {match.T2SetScore}</p>
