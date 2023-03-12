@@ -1,10 +1,10 @@
 import { useState } from "react";
 // useEffect
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, Link } from "react-router-dom";
 // Route, Navigate
 import './App.css';
 
-import { getUser } from "../../utilities/users-service";
+import { getUser, logOut } from "../../utilities/users-service";
 import * as matchesAPI from "../../utilities/matches-api"
 
 import AuthPage from "../AuthPage/AuthPage";
@@ -13,9 +13,23 @@ import MatchList from "../../components/MatchList/MatchList";
 function App() {
   const [user, setUser] = useState(getUser())
 
+
+
+
+  function handleLogOut() {
+    logOut()
+    setUser(null)
+  }
+
+
+
   return (
     <div className="App">
         <h1>No Spoilers - Tennis</h1>
+
+        <Link to="" onClick={handleLogOut} className="links">
+          Log Out
+        </Link>
 
       {user ? (
         <>

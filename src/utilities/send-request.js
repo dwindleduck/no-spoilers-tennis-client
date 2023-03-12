@@ -5,12 +5,12 @@ import { getToken } from "./users-service"
 const DEV_URL = "http://localhost:8000"
 
 export default async function sendRequest(url, method="GET", payload=null) {
-    const options = { method, credentials: 'include'}
+    const options = { method }
+    // credentials: 'include'
     if (payload) {
         options.headers = { 
             "Accept": "application/json",
             "Content-Type": "application/json",
-            // "Access-Control-Allow-Credentials": "true"
         }
         options.body = JSON.stringify(payload)
     }  
@@ -23,6 +23,8 @@ export default async function sendRequest(url, method="GET", payload=null) {
     }
 
     const res = await fetch(DEV_URL + url, options) 
+    console.log("sendRequest *******")
+    console.log(res)
     if(res.ok) {
         if (res.status === 204) {
             return res

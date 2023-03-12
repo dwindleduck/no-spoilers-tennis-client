@@ -1,10 +1,13 @@
 import * as usersAPI from "./users-api"
 
 export async function signUp(userData) {
+    console.log("****** Sign Up Function *****")
     const token = await usersAPI.signUp(userData)
+    console.log("getting past await signup")
     console.log(token)
-    localStorage.setItem("token", token)
-    return getUser()
+    // localStorage.setItem("token", token)
+    // return getUser()
+    return login(userData)
 }
 
 export function getToken() {
@@ -49,6 +52,8 @@ export function getUser() {
 
 export function logOut() {
     localStorage.removeItem("token")
+    localStorage.removeItem("userName")
+    localStorage.removeItem("userId")
 }
 
 export async function login(credentials) {
@@ -56,7 +61,8 @@ export async function login(credentials) {
     const token = await usersAPI.login(credentials)
     //save the token, return the user
     localStorage.setItem("token", token.user.token)
-
+    localStorage.setItem("userName", token.user.email)
+    localStorage.setItem("userId", token.user.id)
     console.log(token)
     return getUser()
 }
