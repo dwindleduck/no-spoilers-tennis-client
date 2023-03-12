@@ -12,6 +12,3 @@ export async function login(credentials) {
 export async function logout(credentials) {
     return sendRequest(BASE_URL + "/sign-out/", "DELETE", credentials)
 }
-export async function checkToken() {
-    return sendRequest(BASE_URL + "/check-token/")
-}

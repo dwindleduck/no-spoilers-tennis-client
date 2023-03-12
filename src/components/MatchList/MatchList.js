@@ -9,9 +9,7 @@ export default function MatchList() {
 
 
     async function getAllMatches() {
-      console.log("App.js getAllMatches")
       const allMatches = await matchesAPI.show()
-      console.log(allMatches)
       setMatches(allMatches)
     }
 
