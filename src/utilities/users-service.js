@@ -6,7 +6,6 @@ export async function signUp(userData) {
 }
 
 export function getToken() {
-    
     //get token from localStorage
     const token = localStorage.getItem("token")
     if(!token) return null
@@ -22,10 +21,14 @@ export function getUser() {
     }
 }
 
-export function logOut() {
-    localStorage.removeItem("token")
-    // localStorage.removeItem("userName")
-    // localStorage.removeItem("userId")
+export async function logOut(credentials) {
+    if(credentials) {
+        //DELETE user session
+        const logoutTest = await usersAPI.logout(credentials)
+        //remove token
+        localStorage.removeItem("token")
+        return console.log("logged out")
+    } else { return console.log("no user to log out")}
 }
 
 export async function login(credentials) {
@@ -33,7 +36,5 @@ export async function login(credentials) {
     const token = await usersAPI.login(credentials)
     //save the token, return the user
     localStorage.setItem("token", token.user.token)
-    // localStorage.setItem("userName", token.user.email)
-    // localStorage.setItem("userId", token.user.id)
     return getUser()
 }

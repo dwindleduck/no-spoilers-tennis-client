@@ -1,28 +1,22 @@
-import { useState, useEffect } from "react";
 import MatchDetails from "../MatchDetails/MatchDetails"
 
-import * as matchesAPI from "../../utilities/matches-api"
+export default function MatchList({matches, selectedTournament}) {
 
 
-export default function MatchList() {
-    const [matches, setMatches] = useState([])
-
-
-    async function getAllMatches() {
-      const allMatches = await matchesAPI.show()
-      setMatches(allMatches)
+    if(selectedTournament) {
+        matches = matches.filter(match => match.competition === selectedTournament)
     }
 
-    useEffect(() => {
-        getAllMatches();
-    }, []);
+
+    const listOfMatches = matches.map((match, index) => (
+        <MatchDetails key={index} match={match}/>
+    ))
+
 
     return(
         <>
         <h3>Match List</h3>
-        {matches.map((match, index) => (
-                    <MatchDetails key={index} match={match}/>
-                ))}
+        {listOfMatches}
         </>
     )
 }
