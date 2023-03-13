@@ -17,7 +17,7 @@ export default function App() {
   const [matches, setMatches] = useState([])
   const [leagues, setLeagues] = useState([])
   const [tournaments, setTournaments] = useState([])
-  const [selectedTournament, setSelectedTournament] = useState("")
+  const [selectedCategory, setSelectedCategory] = useState("")
 
 
   async function getAllMatches() {
@@ -85,8 +85,8 @@ export default function App() {
                 matches={matches}
                 leagues={leagues}
                 tournaments={tournaments}
-                selectedTournament={selectedTournament}
-                setSelectedTournament={setSelectedTournament}
+                selectedCategory={selectedCategory}
+                setSelectedCategory={setSelectedCategory}
                 />} />
 
             {/* <Route path="/_______" element={} /> */}

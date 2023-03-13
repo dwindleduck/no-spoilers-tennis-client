@@ -1,12 +1,20 @@
+import "./MatchDetails.css"
+
+
 export default function MatchDetails({match}) {
 
     return(
-        <>
-        <h4>League: {match.league}</h4>
-        <h5>Tournament: {match.competition}</h5>
-        
+        <div className="MatchDetails">
+
+        {/* Show */}
+        {/* <h4>League: {match.league}</h4>
+        <h5>Tournament: {match.competition}</h5> */}
         <p>Start time: {match.date_time}</p>
+
+        {/* Selectively Show */}
         <p>{match.T1name} v {match.T2name}</p>
+
+        {/* Don't Show */}
         <p>Set Score: {match.T1SetScore} - {match.T2SetScore}</p>
        
     
@@ -35,6 +43,6 @@ export default function MatchDetails({match}) {
             'created_at': self.created_at,
             'updated_at': self.updated_at, */}
 
-        </>
+        </div>
     )
 }

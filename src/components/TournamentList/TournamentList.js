@@ -1,12 +1,12 @@
 import TournamentSelector from "../TournamentSelector/TournamentSelector"
 
-export default function TournamentList({leagues, tournaments, setSelectedTournament}) {
+export default function TournamentList({leagues, tournaments, setSelectedCategory}) {
    
     const leagueSelector = leagues.map((tournament, index) => (
         <TournamentSelector 
             key={index}
             tournament={tournament}
-            setSelectedTournament={setSelectedTournament}
+            setSelectedCategory={setSelectedCategory}
             />
     ))
 
@@ -22,7 +22,7 @@ export default function TournamentList({leagues, tournaments, setSelectedTournam
         <TournamentSelector 
             key={index}
             tournament={tournament}
-            setSelectedTournament={setSelectedTournament}
+            setSelectedCategory={setSelectedCategory}
             />
     ))
    

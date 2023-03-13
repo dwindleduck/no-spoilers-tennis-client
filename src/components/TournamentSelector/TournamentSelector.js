@@ -1,10 +1,10 @@
-export default function TournamentSelector({tournament, setSelectedTournament}) {
+export default function TournamentSelector({tournament, setSelectedCategory}) {
    
-    function handleSelectTournament() {
-        setSelectedTournament(tournament)
+    function handleSelectCategory() {
+        setSelectedCategory(tournament)
     }
    
     return(
-        <li onClick={handleSelectTournament}>{tournament}</li>
+        <li onClick={handleSelectCategory}>{tournament}</li>
     )
 }
