@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 
 
 
-export default function MatchList({matches, leagues, tournaments, selectedCategory}) {
+export default function MatchList({matches, watchedMatches, leagues, tournaments, selectedCategory}) {
 
     const [filteredMatches, setFilteredMatches] = useState([])
     // const [subCategories, setSubCategories] = useState([])
@@ -43,43 +43,33 @@ export default function MatchList({matches, leagues, tournaments, selectedCatego
         //if the category is a league
         if (leagues.includes(selectedCategory)){
             console.log("This is a league")
-            while(subCategories.length > 0) {
-                subCategories.pop()
-            }
-            const matchesByCategory = matches.filter(filterMatches)
-            setFilteredMatches(matchesByCategory)
-
-            console.log(filteredMatches)
-            console.log(subCategories)
-
             //loop through the tournament list
-            const leagueTiles = subCategories.map((tournament, index) => <SubCategory key={index} subCategory={tournament} listOfMatches={matches.filter(match => match.competition === tournament)}/>)
-            console.log("leagueTiles")
-            console.log(leagueTiles)
-
+            const leagueTiles = subCategories.map((tournament, index) => <SubCategory
+                    key={index}
+                    subCategory={tournament}
+                    // listOfMatches={matches.filter(match => match.competition === tournament)}
+                    listOfMatches={watchedMatches.filter(match => match.match.competition === tournament)}
+                    />)
             setSubCategoryTiles(leagueTiles)
             
         }//if the category is a tournament
         else if(tournaments.includes(selectedCategory)){
             console.log("This is a tournament")
-            while(subCategories.length > 0) {
-                subCategories.pop()
-            }
-            const matchesByCategory = matches.filter(filterMatches)
-            setFilteredMatches(matchesByCategory)
-            
-            console.log(filteredMatches)
-            console.log(subCategories)
-
             //loop through the league list
-            const tournamentTiles = subCategories.map((league, index) => <SubCategory key={index} subCategory={league} listOfMatches={matches.filter(match => match.league === league)}/>)
-            console.log("tournamentTiles")
-            console.log(tournamentTiles)
+            const tournamentTiles = subCategories.map((league, index) => <SubCategory
+                    key={index}
+                    subCategory={league}
+                    // listOfMatches={matches.filter(match => match.league === league)}
+                    listOfMatches={watchedMatches.filter(match => match.match.league === league)}
+                    />)
             setSubCategoryTiles(tournamentTiles)
                 
         } else {
             // Showing all leagues
-            const allLeagues = leagues.map((league, index) => <SubCategory key={index} subCategory={league} listOfMatches={matches.filter(match => match.league === league)}/>)
+            console.log(watchedMatches[0])
+
+            const allLeagues = leagues.map((league, index) =>           
+            <SubCategory key={index} subCategory={league} listOfMatches={watchedMatches.filter(match => match.league === league)}/>)
             
             setSubCategoryTiles(allLeagues)
         }
@@ -89,23 +79,39 @@ export default function MatchList({matches, leagues, tournaments, selectedCatego
     //this captures the initial loading
     useEffect(() => {
         updateDisplay()
+    }, []);
+
+
+    useEffect(() => {
+        updateDisplay()
     }, [leagues]);
+
     //on category change
     useEffect(() => {
         // matches = matches.filter(filterMatches)
-        selectedCategory =
+        // selectedCategory =
+        while(subCategories.length > 0) {
+            subCategories.pop()
+        }
+        const matchesByCategory = matches.filter(filterMatches)
+        setFilteredMatches(matchesByCategory)
+
+        // console.log("filteredMatches")
+        // console.log(filteredMatches)
+        // console.log(subCategories)
+
         updateDisplay()
     }, [selectedCategory]);
 
 
     return(
-        <>
+        <div className="MatchList">
         <h3>{selectedCategory && selectedCategory}</h3>
         {/* Calendar Element */}
 
         {/* Sub Categories */}
         {subCategoryTiles}
-        </>
+        </div>
     )
 }
 

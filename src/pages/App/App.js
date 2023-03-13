@@ -6,17 +6,21 @@ import './App.css';
 
 import { getUser, logOut } from "../../utilities/users-service";
 import * as matchesAPI from "../../utilities/matches-api"
+import * as watchedMatchesAPI from "../../utilities/watched-matches-api"
 
 import AuthPage from "../AuthPage/AuthPage";
 import Header from '../../components/Header/Header';
 import MatchList from "../../components/MatchList/MatchList";
 import MatchesByDay from "../MatchesByDay/MatchesByDay";
 
+
 export default function App() {
   const [user, setUser] = useState(getUser())
   const [matches, setMatches] = useState([])
   const [leagues, setLeagues] = useState([])
   const [tournaments, setTournaments] = useState([])
+
+  const [watchedMatches, setWatchedMatches] = useState([])
   const [selectedCategory, setSelectedCategory] = useState("")
 
 
@@ -25,8 +29,19 @@ export default function App() {
     setMatches(allMatches)
   }
 
+  async function getWatchedMatches() {
+    const allWatched = await watchedMatchesAPI.show()
+    // console.log("allWatched")
+    // console.log(allWatched)
+    setWatchedMatches(allWatched)
+  }
+
+
+
+
   useEffect(() => {
       getAllMatches()
+      getWatchedMatches()
   }, []);
 
 
@@ -50,12 +65,9 @@ export default function App() {
   }
 
   useEffect(() => {
+    getWatchedMatches()
     getUniqueTournamentNames()
 }, [matches]);
-
-
-
-
 
 
 
@@ -85,6 +97,8 @@ export default function App() {
                 matches={matches}
                 leagues={leagues}
                 tournaments={tournaments}
+                watchedMatches={watchedMatches}
+                getWatchedMatches={getWatchedMatches}
                 selectedCategory={selectedCategory}
                 setSelectedCategory={setSelectedCategory}
                 />} />
