@@ -4,5 +4,8 @@
     gap: 10px;
 }
 .react-calendar {
-    grid-column: span 2;
+    /* grid-column: span 2; */
+}
+.MatchList {
+    grid-row: span 3;
 }

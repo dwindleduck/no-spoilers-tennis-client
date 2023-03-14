@@ -12,17 +12,25 @@ export default function MatchesByDay({matches, leagues, tournaments, watchedMatc
     // console.log(watchedMatches)
     // console.log(matches)
 
-    const [value, onChange] = useState(new Date());
+    const [currentDate, selectDate] = useState(new Date());
 
-    useEffect(() => {
-        // console.log(value)
-    }, [value]);
+    // useEffect(() => {
+    //     // console.log(value)
+    // }, [currentDate]);
 
 
     return (
         <div className="MatchesByDay">
-            <Calendar onChange={onChange} value={value}  />
+            <Calendar onChange={selectDate} value={currentDate}  />
             
+            <MatchList 
+                matches={matches}
+                watchedMatches={watchedMatches}
+                leagues={leagues}
+                tournaments={tournaments}
+                selectedCategory={selectedCategory}
+                selectedDate={currentDate}/>
+
             <TournamentList
                 matches={matches}
                 watchedMatches={watchedMatches}
@@ -31,17 +39,6 @@ export default function MatchesByDay({matches, leagues, tournaments, watchedMatc
                 tournaments={tournaments}
                 setSelectedCategory={setSelectedCategory}
                 />
-
-            
-
-            <MatchList 
-                matches={matches}
-                watchedMatches={watchedMatches}
-                leagues={leagues}
-                tournaments={tournaments}
-                selectedCategory={selectedCategory}/>
-
-
            
         </div>
 

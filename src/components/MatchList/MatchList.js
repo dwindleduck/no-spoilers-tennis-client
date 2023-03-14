@@ -5,16 +5,23 @@ import { useState, useEffect } from "react"
 
 
 //do we need to pass "matches" into this at all?
-export default function MatchList({matches, watchedMatches, leagues, tournaments, selectedCategory}) {
+export default function MatchList({matches, watchedMatches, leagues, tournaments, selectedCategory, selectedDate}) {
 
-    
-    // console.log(watchedMatches)
-    // console.log(matches)
+    // console.log(selectedDate)
+    // console.log(Date.parse(selectedDate))
+
+    // Split selectedDate into 
+    //weekday, day, month (for page title)
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const dateSubset = selectedDate.toLocaleDateString(undefined, options)
 
 
-    // const [filteredMatches, setFilteredMatches] = useState([])
-    // const [subCategories, setSubCategories] = useState([])
-    // const subCategories = []
+
+    // const matchesSelectedByDate = watchedMatches.filter(match =>
+    //     new Date(match.match.date_time).toLocaleDateString(undefined, options) === dateSubset)
+
+
+
     const [subCategories, setSubCategories] = useState([])
     const [subCategoryTiles, setSubCategoryTiles] = useState([])
 
@@ -62,6 +69,11 @@ export default function MatchList({matches, watchedMatches, leagues, tournaments
 
     function updateDisplay(){
         if(watchedMatches){
+            const matchesSelectedByDate = watchedMatches.filter(match =>
+                new Date(match.match.date_time).toLocaleDateString(undefined, options) === dateSubset)
+                
+            console.log(matchesSelectedByDate)
+
             // setSubCategoryTiles([])
             // console.log(watchedMatches)
             //if the category is a league
@@ -78,7 +90,7 @@ export default function MatchList({matches, watchedMatches, leagues, tournaments
                         key={index}
                         subCategory={tournament}
                         // listOfMatches={matches.filter(match => match.competition === tournament)}
-                        listOfMatches={watchedMatches.filter(match => match.match.competition === tournament)}
+                        listOfMatches={matchesSelectedByDate.filter(match => match.match.competition === tournament)}
                         // watchedMatches={watchedMatches}
                         />)
                         // console.log(leagueTiles)
@@ -94,7 +106,7 @@ export default function MatchList({matches, watchedMatches, leagues, tournaments
                         key={index}
                         subCategory={league}
                         // listOfMatches={matches.filter(match => match.league === league)}
-                        listOfMatches={watchedMatches.filter(match => match.match.league === league)}
+                        listOfMatches={matchesSelectedByDate.filter(match => match.match.league === league)}
                         // watchedMatches={watchedMatches}
                         />)
                 setSubCategoryTiles(tournamentTiles)
@@ -105,7 +117,7 @@ export default function MatchList({matches, watchedMatches, leagues, tournaments
                     <SubCategory
                         key={index}
                         subCategory={league}
-                        listOfMatches={watchedMatches.filter(match => match.match.league === league)}
+                        listOfMatches={matchesSelectedByDate.filter(match => match.match.league === league)}
                         // watchedMatches={watchedMatches}
                     />)
                 
@@ -129,6 +141,10 @@ export default function MatchList({matches, watchedMatches, leagues, tournaments
     useEffect(() => {
         updateDisplay()
     }, [subCategories]);
+    
+    useEffect(() => {
+        updateDisplay()
+    }, [selectedDate]);
 
     //on category change
     useEffect(() => {
@@ -155,11 +171,13 @@ export default function MatchList({matches, watchedMatches, leagues, tournaments
 
     return(
         <div className="MatchList">
-        <h3>{selectedCategory && selectedCategory}</h3>
-        
+            {/* <p>{selectedDate.toString()}</p> */}
+            <p>{dateSubset}</p>
+            <h3>{selectedCategory && selectedCategory}</h3>
+            
 
-        {/* Sub Categories */}
-        {subCategoryTiles}
+            {/* Sub Categories */}
+            {subCategoryTiles}
         </div>
     )
 }
