@@ -1,6 +1,9 @@
 import TournamentList from "../../components/TournamentList/TournamentList"
 import MatchList from "../../components/MatchList/MatchList"
 import "./MatchesByDay.css";
+import Calendar from 'react-calendar'
+import 'react-calendar/dist/Calendar.css';
+import { useState, useEffect } from "react"
 
 
 //need to send in matches filtered by date
@@ -9,8 +12,17 @@ export default function MatchesByDay({matches, leagues, tournaments, watchedMatc
     // console.log(watchedMatches)
     // console.log(matches)
 
+    const [value, onChange] = useState(new Date());
+
+    useEffect(() => {
+        // console.log(value)
+    }, [value]);
+
+
     return (
         <div className="MatchesByDay">
+            <Calendar onChange={onChange} value={value}  />
+            
             <TournamentList
                 matches={matches}
                 watchedMatches={watchedMatches}
@@ -20,6 +32,7 @@ export default function MatchesByDay({matches, leagues, tournaments, watchedMatc
                 setSelectedCategory={setSelectedCategory}
                 />
 
+            
 
             <MatchList 
                 matches={matches}
