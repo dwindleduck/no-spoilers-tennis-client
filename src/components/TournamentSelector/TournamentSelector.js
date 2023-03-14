@@ -1,16 +1,20 @@
 import * as watchedMatchesAPI from "../../utilities/watched-matches-api"
 
 
-export default function TournamentSelector({matches, watchedMatches, getWatchedMatches, tournament, setSelectedCategory}) {
+export default function TournamentSelector({
+    matches,
+    watchedMatches, getWatchedMatches,
+    tournament, setSelectedCategory
+}) {
    
+
+    //move this to app
     let isFollowingCategory = false
     //if tournament is in watchedMatches
     watchedMatches.forEach(match => {
         if(match.match.competition === tournament || match.match.league === tournament) {
-            // console.log("isFollowingCategory = true")
             isFollowingCategory = true
         }
-        
     })
 
 
@@ -18,11 +22,8 @@ export default function TournamentSelector({matches, watchedMatches, getWatchedM
         if(isFollowingCategory) {
             setSelectedCategory(tournament)
         }
-        
     }
 
-   
-    
     async function createWatchCard(matchData){
         let alreadyWatching = false
         if(watchedMatches){
@@ -47,7 +48,6 @@ export default function TournamentSelector({matches, watchedMatches, getWatchedM
     async function removeWatchCard(cardId) {
         await watchedMatchesAPI.remove(cardId)
     }
-    
     
     async function handleClick(event) {
         event.preventDefault()
@@ -74,10 +74,9 @@ export default function TournamentSelector({matches, watchedMatches, getWatchedM
                 }
             })
         }
+        //maybe update the display in a different way
         getWatchedMatches()
     }
-
-
 
 
     return(

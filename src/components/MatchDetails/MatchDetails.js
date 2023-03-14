@@ -1,91 +1,30 @@
 import "./MatchDetails.css"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
 import * as watchedMatchesAPI from "../../utilities/watched-matches-api"
 
-
 export default function MatchDetails({match, watchedMatches}) {
 
-
    const matchDetails = match.match
-
-    // console.log(match.id)
-    // console.log(match.spoil_results)
-
+    // const [shouldSpoil, setShouldSpoil] = useState(matchDetails.spoil_results)
     const [shouldSpoil, setShouldSpoil] = useState(match.spoil_results)
-    // const [watchCard, setWatchCard] = useState({})
-
-
-
-    // function getShouldSpoil() {
-    //     if(watchedMatches) {
-    //         if(watchCard) {
-    //             setShouldSpoil(watchCard.spoil_results)
-    //         }
-    //     }
-    // }
-    
-
-    // useEffect(() => {
-    //   return () => {
-    //     if(watchedMatches) {
-    //         setWatchCard(watchedMatches.find(wMatch => wMatch.match.toString() === match.match_id))
-    //     }
-    //     getShouldSpoil()
-    //   };
-    // }, []);
-
-
-
-    // async function updateWatchCard() { 
-    //     console.log(watchCard)
-
-    //     setWatchCard({...watchCard, spoil_results: !shouldSpoil})
-        
-
-    //     //api call to update watchedMatchCard
-    //     const updatedWatchCard = await watchedMatchesAPI.update(watchCard.id, watchCard)
-
-    //     // console.log(updateWatchCard)
-
-    //     return updatedWatchCard
-
-    // }
-
+  
     async function toggleSpoil() {
-
         setShouldSpoil(!shouldSpoil)
-
-        // const updatedMatchData = {}
 
         const matchData = {
             match: matchDetails.match_id,
             spoil_results: !match.spoil_results
         }
 
-        // console.log(updatedMatchData)
         //api call to update watchedMatchCard
         const updatedWatchCard = await watchedMatchesAPI.update(match.id, matchData)
-
-        // console.log(updateWatchCard)
-
         return updatedWatchCard
     }
 
     function handleClick(event) {
         event.preventDefault()
         toggleSpoil()
-
-
-
-
-
-
-        // if(watchCard) {
-        //     // setShouldSpoil(!shouldSpoil)
-        //     // console.log(watchCard.spoil_results)
-        //     // updateWatchCard()
-        // }
     }
 
 

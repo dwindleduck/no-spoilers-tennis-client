@@ -7,29 +7,25 @@ import { useState, useEffect } from "react"
 
 
 //need to send in matches filtered by date
-export default function MatchesByDay({matches, leagues, tournaments, watchedMatches, getWatchedMatches, selectedCategory, setSelectedCategory}) {
+export default function MatchesByDay({
+    matches, leagues,
+    tournaments, watchedMatches,
+    getWatchedMatches,
+    selectedCategory, subCategories, setSelectedCategory}) {
 
-    // console.log(watchedMatches)
-    // console.log(matches)
-
-    const [currentDate, selectDate] = useState(new Date());
-
-    // useEffect(() => {
-    //     // console.log(value)
-    // }, [currentDate]);
-
+    const [selectedDate, selectDate] = useState(new Date());
 
     return (
         <div className="MatchesByDay">
-            <Calendar onChange={selectDate} value={currentDate}  />
+            <Calendar onChange={selectDate} value={selectedDate}  />
             
             <MatchList 
-                matches={matches}
                 watchedMatches={watchedMatches}
                 leagues={leagues}
                 tournaments={tournaments}
                 selectedCategory={selectedCategory}
-                selectedDate={currentDate}/>
+                subCategories={subCategories}
+                selectedDate={selectedDate}/>
 
             <TournamentList
                 matches={matches}

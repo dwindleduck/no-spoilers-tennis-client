@@ -12,14 +12,6 @@ export default function TournamentList({matches, watchedMatches, getWatchedMatch
             setSelectedCategory={setSelectedCategory}
             />
     ))
-
-    // const tournamentList = leagues.map((tournament, index) => (
-    //     <TournamentSelector 
-    //         key={index}
-    //         tournament={tournament}
-    //         setSelectedTournament={setSelectedTournament}
-    //         />
-    // ))
     
     const tournamentList = tournaments.map((tournament, index) => (
         <TournamentSelector 
