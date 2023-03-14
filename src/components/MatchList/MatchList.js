@@ -3,35 +3,59 @@ import { useState, useEffect } from "react"
 
 
 
+//do we need to pass "matches" into this at all?
 export default function MatchList({matches, watchedMatches, leagues, tournaments, selectedCategory}) {
 
-    const [filteredMatches, setFilteredMatches] = useState([])
+    
+    // console.log(watchedMatches)
+    // console.log(matches)
+
+
+    // const [filteredMatches, setFilteredMatches] = useState([])
     // const [subCategories, setSubCategories] = useState([])
-    const subCategories = []
+    // const subCategories = []
+    const [subCategories, setSubCategories] = useState([])
     const [subCategoryTiles, setSubCategoryTiles] = useState([])
     
     
-    //IF there is a selectedCategory, filter by it
-    function filterMatches(match) {
+
+    function getSubCats() {
+        if (leagues.includes(selectedCategory)) {
+            const uniqueCats = [...new Set(watchedMatches.map(singleMatch => singleMatch.match.competition))]
+                // console.log(uniqueCats)
+            return uniqueCats
+        } else if (tournaments.includes(selectedCategory)){
+            const uniqueCats = [...new Set(watchedMatches.map(singleMatch => singleMatch.match.league))]
+                // console.log(uniqueCats)
+            return uniqueCats
+        } else return false
+
+
 
         
-        if (selectedCategory === match.competition){
-            if (!subCategories.includes(match.league)) {
-                subCategories.push(match.league)
-            }
-            // setSubCategories([...subCategories, match.league])
-            // console.log(subCategories)
-            return
-        }
-        else if (selectedCategory === match.league) {
-            if (!subCategories.includes(match.competition)) {
-                subCategories.push(match.competition)
-            }
-            // setSubCategories([...subCategories, match.competition])
-            return true
-        } else return false
     }
-    //after here, matches are filtered by the selectedCategory
+
+
+
+    //IF there is a selectedCategory, filter by it
+    // function filterMatches(match) {
+    //     if (selectedCategory === match.competition){
+    //         if (!subCategories.includes(match.league)) {
+    //             subCategories.push(match.league)
+    //         }
+    //         // setSubCategories([...subCategories, match.league])
+    //         // console.log(subCategories)
+    //         return
+    //     }
+    //     else if (selectedCategory === match.league) {
+    //         if (!subCategories.includes(match.competition)) {
+    //             subCategories.push(match.competition)
+    //         }
+    //         // setSubCategories([...subCategories, match.competition])
+    //         return true
+    //     } else return false
+    // }
+    // //after here, matches are filtered by the selectedCategory
 
 
 
@@ -40,39 +64,58 @@ export default function MatchList({matches, watchedMatches, leagues, tournaments
 
 
     function updateDisplay(){
-        //if the category is a league
-        if (leagues.includes(selectedCategory)){
-            console.log("This is a league")
-            //loop through the tournament list
-            const leagueTiles = subCategories.map((tournament, index) => <SubCategory
-                    key={index}
-                    subCategory={tournament}
-                    // listOfMatches={matches.filter(match => match.competition === tournament)}
-                    listOfMatches={watchedMatches.filter(match => match.match.competition === tournament)}
-                    />)
-            setSubCategoryTiles(leagueTiles)
-            
-        }//if the category is a tournament
-        else if(tournaments.includes(selectedCategory)){
-            console.log("This is a tournament")
-            //loop through the league list
-            const tournamentTiles = subCategories.map((league, index) => <SubCategory
-                    key={index}
-                    subCategory={league}
-                    // listOfMatches={matches.filter(match => match.league === league)}
-                    listOfMatches={watchedMatches.filter(match => match.match.league === league)}
-                    />)
-            setSubCategoryTiles(tournamentTiles)
-                
-        } else {
-            // Showing all leagues
-            console.log(watchedMatches[0])
+        if(watchedMatches){
+            // setSubCategoryTiles([])
+            // console.log(watchedMatches)
+            //if the category is a league
+            if (subCategories && leagues.includes(selectedCategory)){
+                // console.log("This is a league")
 
-            const allLeagues = leagues.map((league, index) =>           
-            <SubCategory key={index} subCategory={league} listOfMatches={watchedMatches.filter(match => match.league === league)}/>)
+                // console.log(subCategories)
+                // console.log(watchedMatches)
+                // console.log(watchedMatches[0].match.league === "WTA 1000")
+                //loop through the tournament list
+
+                const leagueTiles = subCategories.map((tournament, index) =>
+                    <SubCategory
+                        key={index}
+                        subCategory={tournament}
+                        // listOfMatches={matches.filter(match => match.competition === tournament)}
+                        listOfMatches={watchedMatches.filter(match => match.match.competition === tournament)}
+                        // watchedMatches={watchedMatches}
+                        />)
+                        // console.log(leagueTiles)
+                setSubCategoryTiles(leagueTiles)
+                
+            }//if the category is a tournament
+            else if(subCategories && tournaments.includes(selectedCategory)){
+                // console.log("This is a tournament")
+                //loop through the league list
+                // console.log(filteredMatches)
+                const tournamentTiles = subCategories.map((league, index) =>
+                    <SubCategory
+                        key={index}
+                        subCategory={league}
+                        // listOfMatches={matches.filter(match => match.league === league)}
+                        listOfMatches={watchedMatches.filter(match => match.match.league === league)}
+                        // watchedMatches={watchedMatches}
+                        />)
+                setSubCategoryTiles(tournamentTiles)
+                    
+            } else {
+                // Showing all leagues
+                const allLeagues = leagues.map((league, index) =>           
+                    <SubCategory
+                        key={index}
+                        subCategory={league}
+                        listOfMatches={watchedMatches.filter(match => match.match.league === league)}
+                        // watchedMatches={watchedMatches}
+                    />)
+                
+                setSubCategoryTiles(allLeagues)
             
-            setSubCategoryTiles(allLeagues)
-        }
+            }
+        }   
     }
        
 
@@ -84,17 +127,26 @@ export default function MatchList({matches, watchedMatches, leagues, tournaments
 
     useEffect(() => {
         updateDisplay()
-    }, [leagues]);
+    }, [watchedMatches]);
+
+    useEffect(() => {
+        updateDisplay()
+    }, [subCategories]);
 
     //on category change
     useEffect(() => {
         // matches = matches.filter(filterMatches)
         // selectedCategory =
-        while(subCategories.length > 0) {
-            subCategories.pop()
-        }
-        const matchesByCategory = matches.filter(filterMatches)
-        setFilteredMatches(matchesByCategory)
+        // while(subCategories.length > 0) {
+        //     subCategories.pop()
+        // }
+        const subCatList = getSubCats()
+        setSubCategories(Array.from(subCatList))
+
+
+        // const matchesByCategory = matches.filter(filterMatches)
+        // // console.log(matchesByCategory)
+        // setFilteredMatches(matchesByCategory)
 
         // console.log("filteredMatches")
         // console.log(filteredMatches)
