@@ -31,9 +31,13 @@ export default function App() {
 
   async function getWatchedMatches() {
     const allWatched = await watchedMatchesAPI.show()
+    console.log(Date.parse(allWatched[0].match.date_time))
+    // console.log(allWatched[0])
+    const sortedMatches = allWatched.sort((a, b) => Date.parse(a.match.date_time) - Date.parse(b.match.date_time))
+    // console.log(sortedMatches)
     // console.log("allWatched")
     // console.log(allWatched)
-    setWatchedMatches(allWatched)
+    setWatchedMatches(sortedMatches)
   }
 
   function getUniqueTournamentNames() {

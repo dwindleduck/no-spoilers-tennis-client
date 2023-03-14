@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 
 
 
+
 //do we need to pass "matches" into this at all?
 export default function MatchList({matches, watchedMatches, leagues, tournaments, selectedCategory}) {
 
@@ -16,7 +17,7 @@ export default function MatchList({matches, watchedMatches, leagues, tournaments
     // const subCategories = []
     const [subCategories, setSubCategories] = useState([])
     const [subCategoryTiles, setSubCategoryTiles] = useState([])
-    
+
     
 
     function getSubCats() {
@@ -29,10 +30,6 @@ export default function MatchList({matches, watchedMatches, leagues, tournaments
                 // console.log(uniqueCats)
             return uniqueCats
         } else return false
-
-
-
-        
     }
 
 
@@ -159,7 +156,7 @@ export default function MatchList({matches, watchedMatches, leagues, tournaments
     return(
         <div className="MatchList">
         <h3>{selectedCategory && selectedCategory}</h3>
-        {/* Calendar Element */}
+        
 
         {/* Sub Categories */}
         {subCategoryTiles}

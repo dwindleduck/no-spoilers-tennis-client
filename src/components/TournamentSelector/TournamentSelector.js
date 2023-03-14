@@ -7,16 +7,18 @@ export default function TournamentSelector({matches, watchedMatches, getWatchedM
     //if tournament is in watchedMatches
     watchedMatches.forEach(match => {
         if(match.match.competition === tournament || match.match.league === tournament) {
-            console.log("isFollowingCategory = true")
+            // console.log("isFollowingCategory = true")
             isFollowingCategory = true
-
         }
         
     })
 
 
     function handleSelectCategory() {
-        setSelectedCategory(tournament)
+        if(isFollowingCategory) {
+            setSelectedCategory(tournament)
+        }
+        
     }
 
    
