@@ -3,9 +3,10 @@
     grid-template-columns: 1fr 4fr;
     gap: 10px;
 }
-.react-calendar {
-    /* grid-column: span 2; */
-}
 .MatchList {
     grid-row: span 3;
+}
+
+.MatchesByDay .react-calendar {
+    width: 250px;
 }

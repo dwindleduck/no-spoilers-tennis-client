@@ -1,0 +1,15 @@
+.TournamentList {
+    text-align: left;
+
+}
+
+.TournamentList ul {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    gap: 3px;
+    padding-left: 10px;
+
+}
+.TournamentList ul li{
+    list-style-type: none;
+}

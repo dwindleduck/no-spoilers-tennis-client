@@ -33,23 +33,12 @@ export default function MatchDetails({match, watchedMatches}) {
     return(
         <div className="MatchDetails">
 
-            <button onClick={handleClick}>{shouldSpoil ? "Hide Results" : "Spoil"}</button>
-
-            {/* Show */}
-            {/* Split matchDetails.date_time into
-                hour, minute */}
-            <p>Start time: {matchDetails.date_time}</p>
-
             {/* Selectively Show */}
-            <p>{matchDetails.T1name}</p>
-            <p>{matchDetails.T2name}</p>
-
-
-         
-
-            {/* Don't Show */}
-            {/* <div className="HIDE"> */}
-            
+            <div className="PlayerNames">
+                <p>{matchDetails.T1name}</p>
+                <p>{matchDetails.T2name}</p>
+            </div>
+            {/* ShouldSpoil section */}
             {shouldSpoil ?(
                 <div className="SpoiledResults">
                     {/* <p>Set Score: {matchDetails.T1SetScore} - {matchDetails.T2SetScore}</p> */}
@@ -63,39 +52,46 @@ export default function MatchDetails({match, watchedMatches}) {
                     <div>{matchDetails.T2Set4}</div>
                     <div>{matchDetails.T1Set5}</div>
                     <div>{matchDetails.T2Set5}</div>
-
-               
-
                 </div>
                 ) : (
-                    <></>
+                    <div className="HiddenResults"></div>
                 )
             }
          
          
-            {/* 'match_id': self.match_id,
-            'date_time': self.date_time,
-            'league': self.league,
-            'competition': self.competition,
-            'T1name': self.T1name,
-            'T2name': self.T2name,
-            'T1SetScore': self.T1SetScore,
-            'T2SetScore': self.T2SetScore,
-            'T1Set1': self.T1Set1,
-            'T2Set1': self.T2Set1,
-            'T1Set2': self.T1Set2,
-            'T2Set2': self.T2Set2,
-            'T1Set3': self.T1Set3,
-            'T2Set3': self.T2Set3,
-            'T1Set4': self.T1Set4,
-            'T2Set4': self.T2Set4,
-            'T1Set5': self.T1Set5,
-            'T2Set5': self.T2Set5,
-            'status': self.status,
-            'winner': self.winner,
-            'created_at': self.created_at,
-            'updated_at': self.updated_at, */}
+            <button onClick={handleClick}>{shouldSpoil ? "Hide Results" : "Spoil"}</button>
 
+            {/* Show */}
+            {/* Split matchDetails.date_time into
+                hour, minute */}
+            <p>Start time: {matchDetails.date_time}</p>
+
+            
         </div>
     )
 }
+
+
+
+        //     'match_id': self.match_id,
+        //     'date_time': self.date_time,
+        //     'league': self.league,
+        //     'competition': self.competition,
+        //     'T1name': self.T1name,
+        //     'T2name': self.T2name,
+        //     'T1SetScore': self.T1SetScore,
+        //     'T2SetScore': self.T2SetScore,
+        //     'T1Set1': self.T1Set1,
+        //     'T2Set1': self.T2Set1,
+        //     'T1Set2': self.T1Set2,
+        //     'T2Set2': self.T2Set2,
+        //     'T1Set3': self.T1Set3,
+        //     'T2Set3': self.T2Set3,
+        //     'T1Set4': self.T1Set4,
+        //     'T2Set4': self.T2Set4,
+        //     'T1Set5': self.T1Set5,
+        //     'T2Set5': self.T2Set5,
+        //     'status': self.status,
+        //     'winner': self.winner,
+        //     'created_at': self.created_at,
+        //     'updated_at': self.updated_at, 

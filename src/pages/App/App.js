@@ -121,7 +121,7 @@ useEffect(() => {
 
   return (
     <div className="App">
-      <h1>No Spoilers - Tennis</h1>
+      
 
       {user ? (
         <>

@@ -1,4 +1,5 @@
 import TournamentSelector from "../TournamentSelector/TournamentSelector"
+import "./TournamentList.css"
 
 export default function TournamentList({matches, watchedMatches, getWatchedMatches, leagues, tournaments, setSelectedCategory}) {
    

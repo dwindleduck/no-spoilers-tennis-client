@@ -2,14 +2,17 @@
     background-color: rgb(138, 124, 124);
     margin-bottom:  20px;
     padding: 10px;
+    text-align: left;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
 }
 .SpoiledResults {
     background-color: rgb(80, 163, 80);
     display: grid;
     grid-template-rows: 1fr 1fr;
     grid-template-columns: repeat(5, 1fr);
-
+    /* give a default size for hidden results*/
 }
-.HIDE{
-    display: none;
+.HiddenResults {
+    
 }
