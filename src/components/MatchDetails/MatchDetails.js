@@ -96,23 +96,37 @@ export default function MatchDetails({match, watchedMatches}) {
 
             <button onClick={handleClick}>{shouldSpoil ? "Hide Results" : "Spoil"}</button>
 
-
-            {/* Selectively Show */}
-            <p>{matchDetails.T1name} v {matchDetails.T2name}</p>
-
-
             {/* Show */}
-            {/* <h4>League: {match.league}</h4>
-            <h5>Tournament: {match.competition}</h5> */}
+            {/* Split matchDetails.date_time into
+                hour, minute */}
             <p>Start time: {matchDetails.date_time}</p>
 
+            {/* Selectively Show */}
+            <p>{matchDetails.T1name}</p>
+            <p>{matchDetails.T2name}</p>
+
+
+         
 
             {/* Don't Show */}
             {/* <div className="HIDE"> */}
             
             {shouldSpoil ?(
                 <div className="SpoiledResults">
-                    <p>Set Score: {matchDetails.T1SetScore} - {matchDetails.T2SetScore}</p>
+                    {/* <p>Set Score: {matchDetails.T1SetScore} - {matchDetails.T2SetScore}</p> */}
+                    <div>{matchDetails.T1Set1}</div>
+                    <div>{matchDetails.T2Set1}</div>
+                    <div>{matchDetails.T1Set2}</div>
+                    <div>{matchDetails.T2Set2}</div>
+                    <div>{matchDetails.T1Set3}</div>
+                    <div>{matchDetails.T2Set3}</div>
+                    <div>{matchDetails.T1Set4}</div>
+                    <div>{matchDetails.T2Set4}</div>
+                    <div>{matchDetails.T1Set5}</div>
+                    <div>{matchDetails.T2Set5}</div>
+
+               
+
                 </div>
                 ) : (
                     <></>
