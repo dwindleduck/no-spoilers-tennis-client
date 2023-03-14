@@ -1,24 +1,98 @@
 import "./MatchDetails.css"
+import { useState, useEffect } from "react"
+
+import * as watchedMatchesAPI from "../../utilities/watched-matches-api"
 
 
-export default function MatchDetails({match}) {
+export default function MatchDetails({match, watchedMatches}) {
+
+   const matchDetails = match.match
+    // console.log(matchDetails)
+    // const [shouldSpoil, setShouldSpoil] = useState(false)
+    // const [watchCard, setWatchCard] = useState({})
+
+
+
+    // function getShouldSpoil() {
+    //     if(watchedMatches) {
+    //         if(watchCard) {
+    //             setShouldSpoil(watchCard.spoil_results)
+    //         }
+    //     }
+    // }
+    
+
+    // useEffect(() => {
+    //   return () => {
+    //     if(watchedMatches) {
+    //         setWatchCard(watchedMatches.find(wMatch => wMatch.match.toString() === match.match_id))
+    //     }
+    //     getShouldSpoil()
+    //   };
+    // }, []);
+
+
+
+    // async function updateWatchCard() { 
+    //     console.log(watchCard)
+
+    //     setWatchCard({...watchCard, spoil_results: !shouldSpoil})
+        
+
+    //     //api call to update watchedMatchCard
+    //     const updatedWatchCard = await watchedMatchesAPI.update(watchCard.id, watchCard)
+
+    //     // console.log(updateWatchCard)
+
+    //     return updatedWatchCard
+
+    // }
+
+
+    function handleClick(event) {
+        event.preventDefault()
+
+
+
+
+
+        // if(watchCard) {
+        //     // setShouldSpoil(!shouldSpoil)
+        //     // console.log(watchCard.spoil_results)
+        //     // updateWatchCard()
+        // }
+    }
+
+
+
 
     return(
         <div className="MatchDetails">
-        {/* Selectively Show */}
-        <p>{match.T1name} v {match.T2name}</p>
+
+            <button onClick={handleClick}>{matchDetails.spoil_results ? "Hide Results" : "Spoil"}</button>
 
 
-        {/* Show */}
-        {/* <h4>League: {match.league}</h4>
-        <h5>Tournament: {match.competition}</h5> */}
-        <p>Start time: {match.date_time}</p>
+            {/* Selectively Show */}
+            <p>{matchDetails.T1name} v {matchDetails.T2name}</p>
 
 
-        {/* Don't Show */}
-        <p>Set Score: {match.T1SetScore} - {match.T2SetScore}</p>
-       
-    
+            {/* Show */}
+            {/* <h4>League: {match.league}</h4>
+            <h5>Tournament: {match.competition}</h5> */}
+            <p>Start time: {matchDetails.date_time}</p>
+
+
+            {/* Don't Show */}
+            {/* <div className="HIDE"> */}
+            
+            {matchDetails.spoil_results ?(
+                <div>
+                    <p>Set Score: {matchDetails.T1SetScore} - {matchDetails.T2SetScore}</p>
+                </div>
+                ) : (
+                    <></>
+                )
+            }
          
          
             {/* 'match_id': self.match_id,

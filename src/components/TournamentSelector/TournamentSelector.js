@@ -3,28 +3,33 @@ import * as watchedMatchesAPI from "../../utilities/watched-matches-api"
 
 export default function TournamentSelector({matches, watchedMatches, getWatchedMatches, tournament, setSelectedCategory}) {
    
+    let isFollowingCategory = false
+    //if tournament is in watchedMatches....
+        // isFollowingCategory = true
+
     function handleSelectCategory() {
         setSelectedCategory(tournament)
     }
 
    
     
-    async function createWatchCard(match){
+    async function createWatchCard(matchData){
         let alreadyWatching = false
         if(watchedMatches){
             watchedMatches.forEach(matchToCheck => {
-                // console.log(typeof matchToCheck.match)
+                // console.log(matchToCheck.match)
                 // console.log(match.match)
-                if(matchToCheck.match.toString() === match.match) {
+                if(matchToCheck.match === matchData) {
                     console.log("Already watching")
                     alreadyWatching = true
                 }
             })
         }
-        
+       
         if(!alreadyWatching) {
             console.log("create new watch card")
-            const newWatch = await watchedMatchesAPI.create(match)
+            console.log(matchData)
+            const newWatch = await watchedMatchesAPI.create(matchData)
             return newWatch
         }
     }
@@ -33,19 +38,21 @@ export default function TournamentSelector({matches, watchedMatches, getWatchedM
     async function handleClick(event) {
         event.preventDefault()
         //loop through matches
-        console.log(watchedMatches)
-        console.log(matches)
+        // console.log(watchedMatches)
+        // console.log(matches)
         matches.forEach(match => {
+            // console.log(match)
             //if the match is in this tournament
             if (match.competition === tournament || match.league === tournament) {
                 //start watching
                 
                 //build watchCard 
-                const watchCard = {
+                const matchData = {
                     match: match.match_id
                 }
-
-                createWatchCard(watchCard)
+                
+                // console.log(watchCard)
+                createWatchCard(matchData)
             }
         })
         getWatchedMatches()
@@ -57,7 +64,7 @@ export default function TournamentSelector({matches, watchedMatches, getWatchedM
     return(
         <>
             <li onClick={handleSelectCategory}>{tournament}</li>
-            <button value={tournament} onClick={handleClick}>Follow</button>
+            <button value={tournament} onClick={handleClick}>{isFollowingCategory ? "Unfollow" : "Follow"}</button>
         </>
     )
 }

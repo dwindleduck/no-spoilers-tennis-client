@@ -12,9 +12,9 @@ export async function create(matchData) {
 }
 
 export async function remove(matchId) {
-    return sendRequest(`${BASE_URL}${matchId}`, "DELETE")
+    return sendRequest(`${BASE_URL}${matchId}/`, "DELETE")
 }
 
 export async function update(matchId, matchData) {
-    return sendRequest(`${BASE_URL}${matchId}`, "PATCH", matchData)
+    return sendRequest(`${BASE_URL}${matchId}/`, "PATCH", matchData)
 }

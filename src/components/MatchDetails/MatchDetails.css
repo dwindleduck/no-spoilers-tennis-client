@@ -1,3 +1,7 @@
 .MatchDetails {
     background-color: rgb(138, 124, 124);
 }
+
+.HIDE{
+    display: none;
+}
