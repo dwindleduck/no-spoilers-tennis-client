@@ -1,7 +1,13 @@
 import TournamentSelector from "../TournamentSelector/TournamentSelector"
 import "./TournamentList.css"
 
-export default function TournamentList({matches, watchedMatches, getWatchedMatches, leagues, tournaments, setSelectedCategory}) {
+export default function TournamentList({
+    matches,
+    watchedMatches,
+    getWatchedMatches,
+    leagues,
+    tournaments,
+    setSelectedCategory}) {
    
     const leagueSelector = leagues.map((tournament, index) => (
         <TournamentSelector 
