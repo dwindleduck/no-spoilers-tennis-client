@@ -22,11 +22,11 @@ export default function MatchList({matches, watchedMatches, leagues, tournaments
     function getSubCats() {
         if (leagues.includes(selectedCategory)) {
             const uniqueCats = [...new Set(watchedMatches.map(singleMatch => singleMatch.match.competition))]
-                console.log(uniqueCats)
+                // console.log(uniqueCats)
             return uniqueCats
         } else if (tournaments.includes(selectedCategory)){
             const uniqueCats = [...new Set(watchedMatches.map(singleMatch => singleMatch.match.league))]
-                console.log(uniqueCats)
+                // console.log(uniqueCats)
             return uniqueCats
         } else return false
 
@@ -65,8 +65,10 @@ export default function MatchList({matches, watchedMatches, leagues, tournaments
 
     function updateDisplay(){
         if(watchedMatches){
+            // setSubCategoryTiles([])
+            // console.log(watchedMatches)
             //if the category is a league
-            if (leagues.includes(selectedCategory)){
+            if (subCategories && leagues.includes(selectedCategory)){
                 // console.log("This is a league")
 
                 // console.log(subCategories)
@@ -86,7 +88,7 @@ export default function MatchList({matches, watchedMatches, leagues, tournaments
                 setSubCategoryTiles(leagueTiles)
                 
             }//if the category is a tournament
-            else if(tournaments.includes(selectedCategory)){
+            else if(subCategories && tournaments.includes(selectedCategory)){
                 // console.log("This is a tournament")
                 //loop through the league list
                 // console.log(filteredMatches)
@@ -150,7 +152,7 @@ export default function MatchList({matches, watchedMatches, leagues, tournaments
         // console.log(filteredMatches)
         // console.log(subCategories)
 
-        // updateDisplay()
+        updateDisplay()
     }, [selectedCategory]);
 
 

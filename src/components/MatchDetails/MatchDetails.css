@@ -1,7 +1,10 @@
 .MatchDetails {
     background-color: rgb(138, 124, 124);
 }
+.SpoiledResults {
+    background-color: rgb(80, 163, 80);
 
+}
 .HIDE{
     display: none;
 }

@@ -6,9 +6,13 @@ import * as watchedMatchesAPI from "../../utilities/watched-matches-api"
 
 export default function MatchDetails({match, watchedMatches}) {
 
+
    const matchDetails = match.match
-    // console.log(matchDetails)
-    // const [shouldSpoil, setShouldSpoil] = useState(false)
+
+    // console.log(match.id)
+    // console.log(match.spoil_results)
+
+    const [shouldSpoil, setShouldSpoil] = useState(match.spoil_results)
     // const [watchCard, setWatchCard] = useState({})
 
 
@@ -48,9 +52,30 @@ export default function MatchDetails({match, watchedMatches}) {
 
     // }
 
+    async function toggleSpoil() {
+
+        setShouldSpoil(!shouldSpoil)
+
+        // const updatedMatchData = {}
+
+        const matchData = {
+            match: matchDetails.match_id,
+            spoil_results: !match.spoil_results
+        }
+
+        // console.log(updatedMatchData)
+        //api call to update watchedMatchCard
+        const updatedWatchCard = await watchedMatchesAPI.update(match.id, matchData)
+
+        // console.log(updateWatchCard)
+
+        return updatedWatchCard
+    }
 
     function handleClick(event) {
         event.preventDefault()
+        toggleSpoil()
+
 
 
 
@@ -69,7 +94,7 @@ export default function MatchDetails({match, watchedMatches}) {
     return(
         <div className="MatchDetails">
 
-            <button onClick={handleClick}>{matchDetails.spoil_results ? "Hide Results" : "Spoil"}</button>
+            <button onClick={handleClick}>{shouldSpoil ? "Hide Results" : "Spoil"}</button>
 
 
             {/* Selectively Show */}
@@ -85,8 +110,8 @@ export default function MatchDetails({match, watchedMatches}) {
             {/* Don't Show */}
             {/* <div className="HIDE"> */}
             
-            {matchDetails.spoil_results ?(
-                <div>
+            {shouldSpoil ?(
+                <div className="SpoiledResults">
                     <p>Set Score: {matchDetails.T1SetScore} - {matchDetails.T2SetScore}</p>
                 </div>
                 ) : (

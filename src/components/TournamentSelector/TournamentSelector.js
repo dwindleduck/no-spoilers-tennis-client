@@ -4,8 +4,16 @@ import * as watchedMatchesAPI from "../../utilities/watched-matches-api"
 export default function TournamentSelector({matches, watchedMatches, getWatchedMatches, tournament, setSelectedCategory}) {
    
     let isFollowingCategory = false
-    //if tournament is in watchedMatches....
-        // isFollowingCategory = true
+    //if tournament is in watchedMatches
+    watchedMatches.forEach(match => {
+        if(match.match.competition === tournament || match.match.league === tournament) {
+            console.log("isFollowingCategory = true")
+            isFollowingCategory = true
+
+        }
+        
+    })
+
 
     function handleSelectCategory() {
         setSelectedCategory(tournament)
@@ -33,28 +41,37 @@ export default function TournamentSelector({matches, watchedMatches, getWatchedM
             return newWatch
         }
     }
+
+    async function removeWatchCard(cardId) {
+        await watchedMatchesAPI.remove(cardId)
+    }
     
     
     async function handleClick(event) {
         event.preventDefault()
-        //loop through matches
-        // console.log(watchedMatches)
-        // console.log(matches)
-        matches.forEach(match => {
-            // console.log(match)
-            //if the match is in this tournament
-            if (match.competition === tournament || match.league === tournament) {
-                //start watching
-                
-                //build watchCard 
-                const matchData = {
-                    match: match.match_id
+
+        if(isFollowingCategory) {
+            //remove watch cards
+            watchedMatches.forEach(match => {
+                if (match.match.competition === tournament || match.match.league === tournament) {
+                    //remove
+                    removeWatchCard(match.id)
                 }
-                
-                // console.log(watchCard)
-                createWatchCard(matchData)
-            }
-        })
+            })
+        }
+        else if(!isFollowingCategory) {
+            //createWatchCards
+            matches.forEach(match => {
+                //if the match is in this tournament
+                if (match.competition === tournament || match.league === tournament) {
+                    //start watching
+                    const matchData = {
+                        match: match.match_id
+                    }
+                    createWatchCard(matchData)
+                }
+            })
+        }
         getWatchedMatches()
     }
 

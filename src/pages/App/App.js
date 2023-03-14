@@ -25,8 +25,8 @@ export default function App() {
 
 
   async function getAllMatches() {
-    const allMatches = await matchesAPI.show()
-    setMatches(allMatches)
+      const allMatches = await matchesAPI.show()
+      setMatches(allMatches)
   }
 
   async function getWatchedMatches() {
@@ -36,18 +36,8 @@ export default function App() {
     setWatchedMatches(allWatched)
   }
 
-
-
-
-  useEffect(() => {
-      getAllMatches()
-      getWatchedMatches()
-  }, []);
-
-
   function getUniqueTournamentNames() {
     //get list of unique leagues and competitions
-
     const listOfTournaments = []
     const listOfLeagues = []
 
@@ -64,9 +54,22 @@ export default function App() {
     setTournaments(listOfTournaments)
   }
 
-  useEffect(() => {
+
+useEffect(() => {
+  if(user) {
+    getAllMatches()
+    getWatchedMatches()
+  }
+    
+}, []);
+
+
+
+useEffect(() => {
+  if(user) {
     getWatchedMatches()
     getUniqueTournamentNames()
+  }
 }, [matches]);
 
 
@@ -74,6 +77,8 @@ export default function App() {
   function handleLogOut() {
     logOut(user)
     setUser(null)
+    setWatchedMatches([])
+    setSelectedCategory("")
   }
 
 
