@@ -28,10 +28,23 @@ export default function MatchDetails({match, watchedMatches}) {
     }
 
 
+    // Split selectedDate into 
+    //weekday, day, month (for page title)
+    const options = { 
+        hour: "2-digit",
+        minute: "2-digit",
+    };
+    const dateObject = new Date(matchDetails.date_time)
+    const timeForMatchDetails = dateObject.toLocaleTimeString(undefined, options)
+    console.log(timeForMatchDetails)
+
+
 
 
     return(
         <div className="MatchDetails">
+            
+            <p>{timeForMatchDetails}</p>
 
             {/* Selectively Show */}
             <div className="PlayerNames">
@@ -64,8 +77,7 @@ export default function MatchDetails({match, watchedMatches}) {
             {/* Show */}
             {/* Split matchDetails.date_time into
                 hour, minute */}
-            <p>Start time: {matchDetails.date_time}</p>
-
+            
             
         </div>
     )

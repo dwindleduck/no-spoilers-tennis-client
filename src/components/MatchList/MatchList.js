@@ -15,9 +15,9 @@ export default function MatchList({
     // Split selectedDate into 
     //weekday, day, month (for page title)
     const options = { 
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
+        weekday: 'short',
+        // year: 'numeric',
+        month: 'numeric',
         day: 'numeric'
     };
     const dateForPageTitle = selectedDate.toLocaleDateString(undefined, options)
@@ -27,7 +27,6 @@ export default function MatchList({
 
 
     function updateDisplay(){
-        console.log("updating the display")
         if(watchedMatches){
             const matchesSelectedByDate = watchedMatches.filter(match =>
                 new Date(match.match.date_time).toLocaleDateString(undefined, options) === dateForPageTitle)
@@ -78,8 +77,10 @@ export default function MatchList({
 
     return(
         <div className="MatchList">
-            <p>{dateForPageTitle}</p>
-            <h3>{selectedCategory && selectedCategory}</h3>
+            <div className="PageTitle">
+                <p>{dateForPageTitle}</p>
+                <h3>{selectedCategory && selectedCategory}</h3>
+            </div>
             
             {/* Sub Categories */}
             {subCategoryTiles}
