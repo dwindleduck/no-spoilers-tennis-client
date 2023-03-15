@@ -1,12 +1,24 @@
 .MatchesByDay {
     display: grid;
     grid-template-columns: 1fr 4fr;
-    gap: 10px;
+    gap: 30px;
 }
+.MatchesByDay .react-calendar {
+    width: 250px;
+}
+
+
 .MatchList {
     grid-row: span 3;
 }
 
-.MatchesByDay .react-calendar {
-    width: 250px;
+.MatchList .PageTitle {
+    display: grid;
+    grid-template-columns: 1fr 7fr;
 }
+
+.MatchList .SubCategory {
+
+}
+
+

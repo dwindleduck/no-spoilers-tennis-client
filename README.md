@@ -1,70 +1,41 @@
-# Getting Started with Create React App
+# No Spoilers - Client Repo
+Follow a tennis tournament and you decided if you see the results of any match. No Spoilers!
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Deployed App]()
+![Back End Repo](https://github.com/dwindleduck/no-spoilers-tennis-server)
 
-## Available Scripts
 
-In the project directory, you can run:
+## Technologies Used
+### Backend
+- Python
+- Django
+- 3rd Party API - [LiveScore by Api Dojo](https://rapidapi.com/apidojo/api/livescore6)
+- PostgreSQL
 
-### `npm start`
+### Frontend
+- React
+- Javascript
+- CSS
+- HTML
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## ERD
+![Entity Relationship Diagram](./assets/tennis-ERD.png)
 
-### `npm test`
+## Wireframes
+![Wireframes](./assets/no-spoilers-Wireframes.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## MVP User Stories
+- AAU, I would like to be able to sign up, sign in, and sign out
+- AAU, I would like to see a list of matches by date, then by tournament
+- AAU, I would like to be able to spoil/hide results of each match
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## ICE BOX
+- AAU, I would like to see a list of matches by tournament
+- AAU, I would like to see a list of matches by league
+- AAU, I only want to spoil the details of an upcoming match if the two previous matches have been spoiled
+- AAU, I would like to see a bracket layout for a tournament
+- AAU, I would like to spoil all matches on current page
+- AAU, I would like to choose from a list of sports
+- AAU, I would like to favorite specific matches
+- AAU, I would like to see a list of my favorited matches

@@ -1,12 +1,32 @@
-.auth-container {
+ .auth-container {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
 }
+.form-container {
+  background-color: rgba(122, 200, 122, 0.638);
+  padding: 25px 10px;
+}
+.form-container form {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px
+}
+.form-container form label{
+  grid-column: 1 / span 2;
+  text-align: right;
+}
+.form-container form input {
+  grid-column: 3 / span 3;
+}
 
-a.authpage-link {
+.form-container form .auth-button {
+    grid-column: 3 / span 2;
+}
+
+/*a.authpage-link {
   font-weight: bold;
   color: var(--blue);
 }
@@ -28,10 +48,10 @@ div.welcome-page > h1 {
 div.welcome-page > p {
   margin-top: 5px;
   color: var(--blue);
-}
+} */
 
-button.auth-button:hover {
+/* button.auth-button:hover { */
   /* -webkit-box-shadow: 0px 4px 0px 1px rgba(135,182,167,1);
     -moz-box-shadow: 0px 4px 0px 1px rgba(135,182,167,1); */
-  box-shadow: 0px 4px 0px 1px var(--blue);
-}
+  /* box-shadow: 0px 4px 0px 1px var(--blue);
+} */

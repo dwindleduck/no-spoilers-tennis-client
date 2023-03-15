@@ -49,13 +49,13 @@ export default class SignUpForm extends Component {
                     {/* <label>Name</label>
                     <input type="text" name="name" value={this.state.name} onChange={this.handleChange} required /> */}
 
-                    <label>Email</label>
+                    <label>Email:</label>
                     <input type="email" name="email" value={this.state.email} onChange={this.handleChange} required />
 
-                    <label>Password</label>
+                    <label>Password:</label>
                     <input type="password" name="password" value={this.state.password} onChange={this.handleChange} required />
 
-                    <label>Confirm password</label>
+                    <label>Confirm password:</label>
                     <input type='password' name='password_confirmation' value={this.state.password_confirmation} onChange={this.handleChange} required/>
 
                     <button className="auth-button" type="submit" disabled={disable}>Sign Up</button>
