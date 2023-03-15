@@ -1,13 +1,11 @@
 import * as watchedMatchesAPI from "../../utilities/watched-matches-api"
 
-
 export default function TournamentSelector({
     matches,
     watchedMatches, getWatchedMatches,
     tournament, setSelectedCategory
 }) {
    
-
     //move this to app
     let isFollowingCategory = false
     //if tournament is in watchedMatches
@@ -16,7 +14,6 @@ export default function TournamentSelector({
             isFollowingCategory = true
         }
     })
-
 
     function handleSelectCategory() {
         if(isFollowingCategory) {
@@ -28,8 +25,6 @@ export default function TournamentSelector({
         let alreadyWatching = false
         if(watchedMatches){
             watchedMatches.forEach(matchToCheck => {
-                // console.log(matchToCheck.match)
-                // console.log(match.match)
                 if(matchToCheck.match === matchData) {
                     console.log("Already watching")
                     alreadyWatching = true
@@ -77,7 +72,6 @@ export default function TournamentSelector({
         //maybe update the display in a different way
         getWatchedMatches()
     }
-
 
     return(
         <>

@@ -6,19 +6,10 @@
 .MatchesByDay .react-calendar {
     width: 250px;
 }
-
-
 .MatchList {
     grid-row: span 3;
 }
-
 .MatchList .PageTitle {
     display: grid;
     grid-template-columns: 1fr 7fr;
 }
-
-.MatchList .SubCategory {
-
-}
-
-

@@ -34,7 +34,6 @@ export default function TournamentList({
    
     return (
         <div className="TournamentList">
-            {/* <h4>Tournament Selector</h4> */}
             <h5>Leagues:</h5>
             <ul>
                 {leagueSelector}

@@ -21,37 +21,6 @@
 .form-container form input {
   grid-column: 3 / span 3;
 }
-
 .form-container form .auth-button {
     grid-column: 3 / span 2;
 }
-
-/*a.authpage-link {
-  font-weight: bold;
-  color: var(--blue);
-}
-
-a.authpage-link {
-  cursor: pointer;
-}
-
-a.authpage-link:hover {
-  text-decoration: underline var(--yellow);
-  text-decoration-thickness: 3px;
-}
-
-div.welcome-page > h1 {
-  margin-bottom: 0;
-  color: var(--red);
-}
-
-div.welcome-page > p {
-  margin-top: 5px;
-  color: var(--blue);
-} */
-
-/* button.auth-button:hover { */
-  /* -webkit-box-shadow: 0px 4px 0px 1px rgba(135,182,167,1);
-    -moz-box-shadow: 0px 4px 0px 1px rgba(135,182,167,1); */
-  /* box-shadow: 0px 4px 0px 1px var(--blue);
-} */

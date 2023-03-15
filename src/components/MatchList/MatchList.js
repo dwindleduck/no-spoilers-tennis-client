@@ -1,30 +1,22 @@
 import SubCategory from "../SubCategory/SubCategory"
 import { useState, useEffect } from "react"
 
-
-
-
-//do we need to pass "matches" into this at all?
 export default function MatchList({
     watchedMatches,
     leagues, tournaments,
     selectedCategory, subCategories,
     selectedDate}) {
 
-
     // Split selectedDate into 
     //weekday, day, month (for page title)
     const options = { 
         weekday: 'short',
-        // year: 'numeric',
         month: 'numeric',
         day: 'numeric'
     };
     const dateForPageTitle = selectedDate.toLocaleDateString(undefined, options)
-
     //for rendering
     const [subCategoryTiles, setSubCategoryTiles] = useState([])
-
 
     function updateDisplay(){
         if(watchedMatches){
@@ -32,7 +24,6 @@ export default function MatchList({
                 new Date(match.match.date_time).toLocaleDateString(undefined, options) === dateForPageTitle)
             //if the category is a league
             if (subCategories && leagues.includes(selectedCategory)){
-                // console.log("This is a league")
                 //loop through the tournament list
                 const leagueTiles = subCategories.map((tournament, index) =>
                     <SubCategory
@@ -43,7 +34,6 @@ export default function MatchList({
                 setSubCategoryTiles(leagueTiles)
             }//if the category is a tournament
             else if(subCategories && tournaments.includes(selectedCategory)){
-                // console.log("This is a tournament")
                 //loop through the league list
                 const tournamentTiles = subCategories.map((league, index) =>
                     <SubCategory
@@ -64,12 +54,6 @@ export default function MatchList({
             }
         }   
     }
-       
-
-    // this captures the initial loading
-    // useEffect(() => {
-    //     updateDisplay()
-    // }, []);
 
     useEffect(() => {
         updateDisplay()
