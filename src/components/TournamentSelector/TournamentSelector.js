@@ -26,15 +26,12 @@ export default function TournamentSelector({
         if(watchedMatches){
             watchedMatches.forEach(matchToCheck => {
                 if(matchToCheck.match === matchData) {
-                    console.log("Already watching")
                     alreadyWatching = true
                 }
             })
         }
        
         if(!alreadyWatching) {
-            console.log("create new watch card")
-            console.log(matchData)
             const newWatch = await watchedMatchesAPI.create(matchData)
             return newWatch
         }

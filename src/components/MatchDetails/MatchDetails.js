@@ -34,7 +34,7 @@ export default function MatchDetails({match, watchedMatches}) {
     };
     const dateObject = new Date(matchDetails.date_time)
     const timeForMatchDetails = dateObject.toLocaleTimeString(undefined, options)
-    console.log(timeForMatchDetails)
+
 
 
     return(
