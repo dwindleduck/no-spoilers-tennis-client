@@ -6,7 +6,6 @@ import * as watchedMatchesAPI from "../../utilities/watched-matches-api"
 export default function MatchDetails({match, watchedMatches}) {
 
    const matchDetails = match.match
-    // const [shouldSpoil, setShouldSpoil] = useState(matchDetails.spoil_results)
     const [shouldSpoil, setShouldSpoil] = useState(match.spoil_results)
   
     async function toggleSpoil() {
@@ -27,7 +26,6 @@ export default function MatchDetails({match, watchedMatches}) {
         toggleSpoil()
     }
 
-
     // Split selectedDate into 
     //weekday, day, month (for page title)
     const options = { 
@@ -39,11 +37,10 @@ export default function MatchDetails({match, watchedMatches}) {
     console.log(timeForMatchDetails)
 
 
-
-
     return(
         <div className="MatchDetails">
-            
+
+            {/* Show */}
             <p>{timeForMatchDetails}</p>
 
             {/* Selectively Show */}
@@ -70,21 +67,14 @@ export default function MatchDetails({match, watchedMatches}) {
                     <div className="HiddenResults"></div>
                 )
             }
-         
-         
-            <button onClick={handleClick}>{shouldSpoil ? "Hide Results" : "Spoil"}</button>
 
-            {/* Show */}
-            {/* Split matchDetails.date_time into
-                hour, minute */}
-            
-            
+            <button onClick={handleClick}>{shouldSpoil ? "Hide Results" : "Spoil"}</button>
         </div>
     )
 }
 
 
-
+        // Match Model
         //     'match_id': self.match_id,
         //     'date_time': self.date_time,
         //     'league': self.league,

@@ -7,38 +7,24 @@ import { useState, useEffect } from "react"
 import * as matchesAPI from "../../utilities/matches-api"
 
 
-//need to send in matches filtered by date
 export default function MatchesByDay({
-    // matches,
-    // leagues, tournaments,
     watchedMatches, getWatchedMatches,
     selectedCategory,
-    // subCategories,
     setSelectedCategory}) {
 
     const [selectedDate, selectDate] = useState(new Date());
-
     const [matches, setMatches] = useState([])
     const [leagues, setLeagues] = useState([])
     const [tournaments, setTournaments] = useState([])
-
     const [subCategories, setSubCategories] = useState([])
-
-    //once we render this element
-    //call getAllMatches and getUniqueTournamentNames
-    //move the state of variables to this page:
-        //matches, leagues, tournaments 
-          //for leagues and tournaments
-            //instead of array of names
-            // make array of objects
-            //move functionality from TournamentSelector
-            //  {
-                    //leagueName: "",
-                    //userIsFollowing: false
-
-            //  }
-
-
+    //for leagues and tournaments
+    //instead of array of names
+    // make array of objects
+    //move functionality from TournamentSelector
+    //  {
+            //leagueName: "",
+            //userIsFollowing: false
+    //  }
 
     async function getAllMatches() {
         const listOfTournaments = []
@@ -58,12 +44,10 @@ export default function MatchesByDay({
             listOfLeagues.push(match.league)
             }
         })
-
         setLeagues(listOfLeagues)
         setTournaments(listOfTournaments)
         setMatches(allMatches)
     }
-
 
     function getSubCats() {
         if (leagues.includes(selectedCategory)) {
@@ -79,18 +63,11 @@ export default function MatchesByDay({
           getAllMatches()
       }, []);
 
-    //on matches loaded, get league and tournament lists
-    // useEffect(() => {
-    //     // getWatchedMatches()
-    //     getUniqueTournamentNames()
-    // }, [matches]);
-
     // on category selection, set sub categories
     useEffect(() => {
         const subCatList = getSubCats()
         setSubCategories(Array.from(subCatList))
     }, [selectedCategory]);
-
 
 
     return (

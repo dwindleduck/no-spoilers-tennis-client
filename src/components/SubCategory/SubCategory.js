@@ -1,5 +1,4 @@
 import MatchDetails from "../MatchDetails/MatchDetails"
-import "./SubCategory.css"
 
 export default function SubCategory({subCategory, listOfMatches}) {
 
