@@ -1,6 +1,6 @@
 import { getToken } from "./users-service"
 
-const DEV_URL = "http://localhost:8000"
+const BASE_URL = "https://no-spoilers-server.onrender.com"
 
 export default async function sendRequest(url, method="GET", payload=null) {
     const options = { method }
@@ -19,7 +19,7 @@ export default async function sendRequest(url, method="GET", payload=null) {
         options.headers.Authorization = `Token ${token}`
     }
 
-    const res = await fetch(DEV_URL + url, options) 
+    const res = await fetch(BASE_URL + url, options) 
     if(res.ok) {
         if (res.status === 204) {
             return res
