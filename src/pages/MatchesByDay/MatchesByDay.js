@@ -12,6 +12,21 @@ export default function MatchesByDay({
     selectedCategory,
     setSelectedCategory}) {
 
+
+
+// query server for watchedmatches and matches for the selectedDate
+// 
+// 
+// 
+// for each match, if a watch card does not exist, create it
+// 
+// 
+// 
+// 
+
+
+
+
     const [selectedDate, selectDate] = useState(new Date());
     const [matches, setMatches] = useState([])
     const [leagues, setLeagues] = useState([])
@@ -25,6 +40,7 @@ export default function MatchesByDay({
             //leagueName: "",
             //userIsFollowing: false
     //  }
+
 
     async function getAllMatches() {
         const listOfTournaments = []
@@ -68,6 +84,14 @@ export default function MatchesByDay({
         const subCatList = getSubCats()
         setSubCategories(Array.from(subCatList))
     }, [selectedCategory]);
+
+
+
+
+
+
+
+
 
 
     return (

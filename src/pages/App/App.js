@@ -18,6 +18,23 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState("")
 
 
+
+// query server for unique tournaments and leagues
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+
+
+
+
+
+
+
   async function getWatchedMatches() {
     const allWatched = await watchedMatchesAPI.show()
     //sort by ascending date_time
