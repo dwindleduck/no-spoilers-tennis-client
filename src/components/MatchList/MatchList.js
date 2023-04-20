@@ -7,6 +7,9 @@ export default function MatchList({
     selectedCategory, subCategories,
     selectedDate}) {
 
+        console.log("MatchList Component")
+        console.log(watchedMatches)
+
     // Split selectedDate into 
     //weekday, day, month (for page title)
     const options = { 
