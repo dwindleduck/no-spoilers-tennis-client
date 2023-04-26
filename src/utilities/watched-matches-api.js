@@ -11,8 +11,8 @@ export async function show(date) {
     return sendRequest(`${BASE_URL}${date}/`, "GET")
 }
 
-export async function create(matchData) {
-    return sendRequest(BASE_URL, "POST", matchData)
+export async function create(matchData, date) {
+    return sendRequest(`${BASE_URL}${date}/`, "POST", matchData)
 }
 
 export async function remove(matchId) {
