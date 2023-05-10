@@ -3,6 +3,7 @@ import { getToken } from "./users-service"
 const BASE_URL = "https://no-spoilers-server.onrender.com"
 
 
+
 export default async function sendRequest(url, method="GET", payload=null) {
     const options = { method }
     if (payload) {
@@ -28,7 +29,8 @@ export default async function sendRequest(url, method="GET", payload=null) {
             return (res.json())
         }
     } else {
-        console.log(res.error)
+        // console.log(res.error)
+        console.log(res)
         throw new Error("Bad Request")
     }
 }

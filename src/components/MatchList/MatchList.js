@@ -3,76 +3,65 @@ import { useState, useEffect } from "react"
 
 export default function MatchList({
     watchedMatches,
-    leagues, tournaments,
-    selectedCategory, subCategories,
+    leagues, 
+    selectedTournaments,
     selectedDate}) {
 
-    // Split selectedDate into 
-    //weekday, day, month (for page title)
+
+    // Split selectedDate into weekday, day, month (for page title)
     const options = { 
         weekday: 'short',
         month: 'numeric',
         day: 'numeric'
     };
     const dateForPageTitle = selectedDate.toLocaleDateString(undefined, options)
-    //for rendering
-    const [subCategoryTiles, setSubCategoryTiles] = useState([])
+    const [tournamentTiles, setTournamentTiles] = useState([])
+
+
 
     function updateDisplay(){
         if(watchedMatches){
-            const matchesSelectedByDate = watchedMatches.filter(match =>
-                new Date(match.match.date_time).toLocaleDateString(undefined, options) === dateForPageTitle)
-            //if the category is a league
-            if (subCategories && leagues.includes(selectedCategory)){
-                //loop through the tournament list
-                const leagueTiles = subCategories.map((tournament, index) =>
-                    <SubCategory
-                        key={index}
-                        subCategory={tournament}
-                        listOfMatches={matchesSelectedByDate.filter(match => match.match.competition === tournament)}
-                        />)
-                setSubCategoryTiles(leagueTiles)
-            }//if the category is a tournament
-            else if(subCategories && tournaments.includes(selectedCategory)){
-                //loop through the league list
-                const tournamentTiles = subCategories.map((league, index) =>
-                    <SubCategory
-                        key={index}
-                        subCategory={league}
-                        listOfMatches={matchesSelectedByDate.filter(match => match.match.league === league)}
-                        />)
-                setSubCategoryTiles(tournamentTiles)
-            } else {
-                // Showing all leagues
-                const allLeagues = leagues.map((league, index) =>           
-                    <SubCategory
-                        key={index}
-                        subCategory={league}
-                        listOfMatches={matchesSelectedByDate.filter(match => match.match.league === league)}
-                    />)
-                setSubCategoryTiles(allLeagues)
-            }
+            const tournamentTilesForState = []
+
+            // Iterate over leagues
+            leagues.forEach(league => {
+                league.tournamentList.forEach(tournament => {
+                    // Check if it is a selected tournament OR all are selected
+                        if(selectedTournaments.includes(tournament) || selectedTournaments.length === 0) {
+                            // Create the Tile --> Rename to TournamentTile???
+                            // add it to tournamentTilesForState
+                            tournamentTilesForState.push(
+                                <SubCategory
+                                    key={tournamentTilesForState.length}
+                                    league={league}
+                                    tournament={tournament}
+                                    listOfMatches={watchedMatches.filter(card => card.match.league === league.leagueName && card.match.competition === tournament)}
+                                />
+                            )
+                        }
+                })
+            })
+            setTournamentTiles(tournamentTilesForState)
         }   
     }
 
+
+
     useEffect(() => {
         updateDisplay()
-    }, [watchedMatches, selectedCategory, selectedDate]);
+    }, [watchedMatches, selectedTournaments]);
+
+
+
 
     return(
         <div className="MatchList">
             <div className="PageTitle">
                 <p>{dateForPageTitle}</p>
-                <h3>{selectedCategory && selectedCategory}</h3>
             </div>
             
-            {/* Sub Categories */}
-            {subCategoryTiles}
+            {/* Tournaments */}
+            {tournamentTiles}
         </div>
     )
 }
-
-
-
-
-

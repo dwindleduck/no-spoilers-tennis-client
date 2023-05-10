@@ -5,93 +5,118 @@ import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css';
 import { useState, useEffect } from "react"
 import * as matchesAPI from "../../utilities/matches-api"
-
-
-export default function MatchesByDay({
-    watchedMatches, getWatchedMatches,
-    selectedCategory,
-    setSelectedCategory}) {
-
-
-
-// query server for watchedmatches and matches for the selectedDate
-// 
-// 
-// 
-// for each match, if a watch card does not exist, create it
-// 
-// 
-// 
-// 
+import * as watchedMatchesAPI from "../../utilities/watched-matches-api"
 
 
 
 
+export default function MatchesByDay() {
     const [selectedDate, selectDate] = useState(new Date());
-    const [matches, setMatches] = useState([])
+    const [selectedTournaments, setSelectedTournaments] = useState([])
+    const [watchedMatches, setWatchedMatches] = useState([])
     const [leagues, setLeagues] = useState([])
-    const [tournaments, setTournaments] = useState([])
-    const [subCategories, setSubCategories] = useState([])
-    //for leagues and tournaments
-    //instead of array of names
-    // make array of objects
-    //move functionality from TournamentSelector
-    //  {
-            //leagueName: "",
-            //userIsFollowing: false
-    //  }
 
 
-    async function getAllMatches() {
-        const listOfTournaments = []
+
+
+    // async function testWatchedMatchesEndpoint(dateForAPICalls) {
+    //     const responseData = await watchedMatchesAPI.create_and_get(dateForAPICalls)
+    //     console.log(responseData)
+    //     // return responseData
+    // }
+
+
+    async function getFreshMatchData(dateForAPICalls) {
+        console.log("getFreshMatchData()")
+
+        // Get match_id's (GET)
+        // const allMatches = await matchesAPI.show(dateForAPICalls)
+        // const allWatched = await watchedMatchesAPI.show(dateForAPICalls)
+        // const newWatched = []
+
+
+        // spot to save unique competition names
         const listOfLeagues = []
+
+        // create watch cards for all match_id's
+        // await Promise.all(allMatches.map(async(match) => {
+        //     //if the card does not exist, create it
+        //     if (allWatched.filter(card => card.match.match_id === match.match_id).length === 0 &&
+        //     newWatched.filter(card => card.match.match_id === match.match_id).length === 0
+        //     ){
+        //         const matchData = {
+        //             match: match.match_id
+        //         }
+        //         const newCard = await watchedMatchesAPI.create(matchData, dateForAPICalls)
+        //         // add to newWatched to stop duplicate POST requests
+        //         newWatched.push(newCard)
+        //         console.log("createWatchCard()")
+        //     }
+        // }))
         
-        const allMatches = await matchesAPI.show()
-        allMatches.forEach(match => {
-            if (!listOfTournaments.includes(match.competition)) {
-                //check if in watchedMatches....
-                listOfTournaments.push(match.competition)
-                // {
-                //     tournament: match.competition,
-                //     userIsFollowing: true
-                // }
+        // const completeWatchList = [...allWatched, ...newWatched]
+        // const completeWatchList = await watchedMatchesAPI.show(dateForAPICalls)
+        const completeWatchList = await watchedMatchesAPI.create_and_get(dateForAPICalls)
+
+        console.log("Complete Watch List")
+        console.log(completeWatchList)
+
+        completeWatchList.forEach(card => {
+            // keep track of unique tournaments
+            const targetLeague = listOfLeagues.filter(league => league.leagueName === card.match.league)
+
+            //if the league is IN THE LIST
+            if (targetLeague.length === 1) {
+                //if the tournament is not in the list
+                if (!targetLeague[0].tournamentList.includes(card.match.competition)){
+                    // add Tournament to the list
+                    targetLeague[0].tournamentList.push(card.match.competition)
+                }
             }
-            if (!listOfLeagues.includes(match.league)) {
-            listOfLeagues.push(match.league)
-            }
+            //if this league is NOT IN THE LIST
+            // if(listOfLeagues.filter(league => league.leagueName === card.match.league).length === 0){
+            else {   
+                // add League to the list with first Tournament
+                listOfLeagues.push({
+                    leagueName: card.match.league,
+                    tournamentList: [card.match.competition,],
+                })
+            }            
         })
+
+
+        
+        //DOES THE SORTING NEED TO HAPPEN NOW? SORTING BY CATEGORY FIRST ANYWAY...
+        //sort by ascending date_time
+        const sortedMatches = completeWatchList.sort( (a, b) =>
+            (Date.parse(a.match.date_time) - Date.parse(b.match.date_time))
+        || (b.match.T1name - a.match.T1name)
+        )
+
+        setWatchedMatches(sortedMatches)
         setLeagues(listOfLeagues)
-        setTournaments(listOfTournaments)
-        setMatches(allMatches)
+        console.log("End of getFreshMatchData()")
     }
 
-    function getSubCats() {
-        if (leagues.includes(selectedCategory)) {
-            const uniqueCats = [...new Set(watchedMatches.map(singleMatch => singleMatch.match.competition))]
-            return uniqueCats
-        } else if (tournaments.includes(selectedCategory)){
-            const uniqueCats = [...new Set(watchedMatches.map(singleMatch => singleMatch.match.league))]
-            return uniqueCats
-        } else return false
+
+
+    function parseDateForAPICalls() {
+        const year = selectedDate.getFullYear()
+        let month = selectedDate.getMonth() + 1
+        let day = selectedDate.getDate()
+        if (month < 10) 
+            month = '0' + month
+        if (day < 10) 
+            day = '0' + day
+        return `${year}${month}${day}`
     }
 
+
     useEffect(() => {
-          getAllMatches()
-      }, []);
-
-    // on category selection, set sub categories
-    useEffect(() => {
-        const subCatList = getSubCats()
-        setSubCategories(Array.from(subCatList))
-    }, [selectedCategory]);
-
-
-
-
-
-
-
-
+        const dateForAPICalls = parseDateForAPICalls()
+        getFreshMatchData(dateForAPICalls)
+        // testWatchedMatchesEndpoint(dateForAPICalls)
+    }, [selectedDate]);
 
 
     return (
@@ -101,21 +126,13 @@ export default function MatchesByDay({
             <MatchList 
                 watchedMatches={watchedMatches}
                 leagues={leagues}
-                tournaments={tournaments}
-                selectedCategory={selectedCategory}
-                subCategories={subCategories}
-                selectedDate={selectedDate}/>
+                selectedDate={selectedDate}
+                selectedTournaments={selectedTournaments}/>
 
             <TournamentList
-                matches={matches}
-                watchedMatches={watchedMatches}
-                getWatchedMatches={getWatchedMatches}
                 leagues={leagues}
-                tournaments={tournaments}
-                setSelectedCategory={setSelectedCategory}
+                setSelectedTournaments={setSelectedTournaments}
                 />
-           
         </div>
-
     )
 }
