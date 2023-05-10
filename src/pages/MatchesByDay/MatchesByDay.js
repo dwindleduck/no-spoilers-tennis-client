@@ -19,41 +19,44 @@ export default function MatchesByDay() {
 
 
 
-    async function testWatchedMatchesEndpoint(dateForAPICalls) {
-        const responseData = await watchedMatchesAPI.create_and_get(dateForAPICalls)
-        console.log(responseData)
-        // return responseData
-    }
+    // async function testWatchedMatchesEndpoint(dateForAPICalls) {
+    //     const responseData = await watchedMatchesAPI.create_and_get(dateForAPICalls)
+    //     console.log(responseData)
+    //     // return responseData
+    // }
 
 
     async function getFreshMatchData(dateForAPICalls) {
         console.log("getFreshMatchData()")
 
         // Get match_id's (GET)
-        const allMatches = await matchesAPI.show(dateForAPICalls)
-        const allWatched = await watchedMatchesAPI.show(dateForAPICalls)
-        const newWatched = []
+        // const allMatches = await matchesAPI.show(dateForAPICalls)
+        // const allWatched = await watchedMatchesAPI.show(dateForAPICalls)
+        // const newWatched = []
+
+
         // spot to save unique competition names
         const listOfLeagues = []
 
         // create watch cards for all match_id's
-        await Promise.all(allMatches.map(async(match) => {
-            //if the card does not exist, create it
-            if (allWatched.filter(card => card.match.match_id === match.match_id).length === 0 &&
-            newWatched.filter(card => card.match.match_id === match.match_id).length === 0
-            ){
-                const matchData = {
-                    match: match.match_id
-                }
-                const newCard = await watchedMatchesAPI.create(matchData, dateForAPICalls)
-                // add to newWatched to stop duplicate POST requests
-                newWatched.push(newCard)
-                console.log("createWatchCard()")
-            }
-        }))
+        // await Promise.all(allMatches.map(async(match) => {
+        //     //if the card does not exist, create it
+        //     if (allWatched.filter(card => card.match.match_id === match.match_id).length === 0 &&
+        //     newWatched.filter(card => card.match.match_id === match.match_id).length === 0
+        //     ){
+        //         const matchData = {
+        //             match: match.match_id
+        //         }
+        //         const newCard = await watchedMatchesAPI.create(matchData, dateForAPICalls)
+        //         // add to newWatched to stop duplicate POST requests
+        //         newWatched.push(newCard)
+        //         console.log("createWatchCard()")
+        //     }
+        // }))
         
         // const completeWatchList = [...allWatched, ...newWatched]
-        const completeWatchList = await watchedMatchesAPI.show(dateForAPICalls)
+        // const completeWatchList = await watchedMatchesAPI.show(dateForAPICalls)
+        const completeWatchList = await watchedMatchesAPI.create_and_get(dateForAPICalls)
 
         console.log("Complete Watch List")
         console.log(completeWatchList)
@@ -111,8 +114,8 @@ export default function MatchesByDay() {
 
     useEffect(() => {
         const dateForAPICalls = parseDateForAPICalls()
-        // getFreshMatchData(dateForAPICalls)
-        testWatchedMatchesEndpoint(dateForAPICalls)
+        getFreshMatchData(dateForAPICalls)
+        // testWatchedMatchesEndpoint(dateForAPICalls)
     }, [selectedDate]);
 
 
