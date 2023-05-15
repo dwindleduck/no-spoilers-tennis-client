@@ -2,56 +2,30 @@ import TournamentSelector from "../TournamentSelector/TournamentSelector"
 import "./TournamentList.css"
 
 export default function TournamentList({
-    // matches,
-    // watchedMatches,
-    // getWatchedMatches,
     leagues,
-    // tournaments,
-    // tournamentList,
-    // setSelectedCategory
+    selectedTournaments,
     setSelectedTournaments
 }) {
    
+    console.log(selectedTournaments)
+    
+    const tournamentSelectors = []
+    
+    leagues.forEach(league => {
+        league.tournamentList.forEach(tournament => {
+            tournamentSelectors.push(
+                <TournamentSelector 
+                    key={tournamentSelectors.length}
+                    league={league}
+                    tournament={tournament}
+                    selectedTournaments={selectedTournaments}
+                    setSelectedTournaments={setSelectedTournaments}
+                    />
+            )
+        })
+    });
     
     
-    
-    // const leagueSelector = leagues.map((tournament, index) => (
-    //     <TournamentSelector 
-    //         // matches={matches}
-    //         // watchedMatches={watchedMatches}
-    //         // getWatchedMatches={getWatchedMatches}
-    //         key={index}
-    //         tournament={tournament}
-    //         setSelectedCategory={setSelectedCategory}
-    //         />
-    // ))
-    
-    // const tournamentSelectors = tournaments.map((tournament, index) => (
-    //     <TournamentSelector 
-    //         // matches={matches}
-    //         // watchedMatches={watchedMatches}
-    //         // getWatchedMatches={getWatchedMatches}
-    //         key={index}
-    //         tournament={tournament}
-    //         setSelectedCategory={setSelectedCategory}
-    //         />
-    // ))
-   
-
-
-
-
-
-    // const tournamentSelectors = tournamentList.map((tournament, index) => (
-    //     <TournamentSelector 
-    //         // matches={matches}
-    //         // watchedMatches={watchedMatches}
-    //         // getWatchedMatches={getWatchedMatches}
-    //         key={index}
-    //         tournament={tournament.tournamentName}
-    //         setSelectedCategory={setSelectedCategory}
-    //         />
-    // ))
 
    
     return (
@@ -60,9 +34,9 @@ export default function TournamentList({
             <ul>
                 {leagueSelector}
             </ul> */}
-            <h5>Tournaments:</h5>
+            {/* <h5>Tournaments:</h5> */}
             <ul>
-                {/* {tournamentSelectors} */}
+                {tournamentSelectors}
             </ul>
         </div>
     )

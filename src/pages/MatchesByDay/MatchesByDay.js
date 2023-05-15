@@ -1,66 +1,38 @@
 import TournamentList from "../../components/TournamentList/TournamentList"
 import MatchList from "../../components/MatchList/MatchList"
+import TournamentTile from "../../components/TournamentTile/TournamentTile";
 import "./MatchesByDay.css";
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css';
 import { useState, useEffect } from "react"
 import * as matchesAPI from "../../utilities/matches-api"
 import * as watchedMatchesAPI from "../../utilities/watched-matches-api"
-
-
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 
 export default function MatchesByDay() {
     const [selectedDate, selectDate] = useState(new Date());
     const [selectedTournaments, setSelectedTournaments] = useState([])
-    const [watchedMatches, setWatchedMatches] = useState([])
+    const [watchedMatches, setWatchedMatches] = useState(null)
     const [leagues, setLeagues] = useState([])
+    const [loading, setLoading] = useState(true);
+    const [tournamentTiles, setTournamentTiles] = useState([])
 
 
+    function parseDateForAPICalls() {
+        const year = selectedDate.getFullYear()
+        let month = selectedDate.getMonth() + 1
+        let day = selectedDate.getDate()
+        if (month < 10) 
+            month = '0' + month
+        if (day < 10) 
+            day = '0' + day
+        return `${year}${month}${day}`
+    }
+    
 
-
-    // async function testWatchedMatchesEndpoint(dateForAPICalls) {
-    //     const responseData = await watchedMatchesAPI.create_and_get(dateForAPICalls)
-    //     console.log(responseData)
-    //     // return responseData
-    // }
-
-
-    async function getFreshMatchData(dateForAPICalls) {
-        console.log("getFreshMatchData()")
-
-        // Get match_id's (GET)
-        // const allMatches = await matchesAPI.show(dateForAPICalls)
-        // const allWatched = await watchedMatchesAPI.show(dateForAPICalls)
-        // const newWatched = []
-
-
-        // spot to save unique competition names
+    function getUniqueCompetitions(completeWatchList){
         const listOfLeagues = []
-
-        // create watch cards for all match_id's
-        // await Promise.all(allMatches.map(async(match) => {
-        //     //if the card does not exist, create it
-        //     if (allWatched.filter(card => card.match.match_id === match.match_id).length === 0 &&
-        //     newWatched.filter(card => card.match.match_id === match.match_id).length === 0
-        //     ){
-        //         const matchData = {
-        //             match: match.match_id
-        //         }
-        //         const newCard = await watchedMatchesAPI.create(matchData, dateForAPICalls)
-        //         // add to newWatched to stop duplicate POST requests
-        //         newWatched.push(newCard)
-        //         console.log("createWatchCard()")
-        //     }
-        // }))
-        
-        // const completeWatchList = [...allWatched, ...newWatched]
-        // const completeWatchList = await watchedMatchesAPI.show(dateForAPICalls)
-        const completeWatchList = await watchedMatchesAPI.create_and_get(dateForAPICalls)
-
-        console.log("Complete Watch List")
-        console.log(completeWatchList)
-
         completeWatchList.forEach(card => {
             // keep track of unique tournaments
             const targetLeague = listOfLeagues.filter(league => league.leagueName === card.match.league)
@@ -74,7 +46,6 @@ export default function MatchesByDay() {
                 }
             }
             //if this league is NOT IN THE LIST
-            // if(listOfLeagues.filter(league => league.leagueName === card.match.league).length === 0){
             else {   
                 // add League to the list with first Tournament
                 listOfLeagues.push({
@@ -83,54 +54,88 @@ export default function MatchesByDay() {
                 })
             }            
         })
+        return listOfLeagues
+    }
+    
+    function createTournamentTiles(leagues, matches) {
+        const tournamentTilesForState = []
 
+        // Iterate over leagues
+        leagues.forEach(league => {
+            league.tournamentList.forEach(tournament => {
+                // Check if it is a selected tournament OR all are selected
+                    if(selectedTournaments.includes(tournament) || selectedTournaments.length === 0) {
+                        // add it to tournamentTilesForState
+                        tournamentTilesForState.push(
+                            <TournamentTile
+                                key={tournamentTilesForState.length}
+                                league={league}
+                                tournament={tournament}
+                                listOfMatches={matches.filter(card => card.match.league === league.leagueName && card.match.competition === tournament)}
+                            />
+                        )
+                    }
+            })
+        })
+        setTournamentTiles(tournamentTilesForState)
+    }
+    
+    async function getFreshMatchData() {
+        // activate loading spinner
+        setLoading(true)
 
-        
-        //DOES THE SORTING NEED TO HAPPEN NOW? SORTING BY CATEGORY FIRST ANYWAY...
-        //sort by ascending date_time
+        const dateForAPICalls = parseDateForAPICalls()
+
+        // API call to get watch cards for the selected date
+        const completeWatchList = await watchedMatchesAPI.create_and_get(dateForAPICalls)
+
+        // save unique competition names
+        const listOfLeagues = getUniqueCompetitions(completeWatchList)
+ 
+        //sort watch cards by ascending date_time
         const sortedMatches = completeWatchList.sort( (a, b) =>
             (Date.parse(a.match.date_time) - Date.parse(b.match.date_time))
         || (b.match.T1name - a.match.T1name)
         )
 
-        setWatchedMatches(sortedMatches)
+        // create TournamentTiles
+        createTournamentTiles(listOfLeagues, sortedMatches)
+
         setLeagues(listOfLeagues)
-        console.log("End of getFreshMatchData()")
-    }
+        setWatchedMatches(sortedMatches)
 
-
-
-    function parseDateForAPICalls() {
-        const year = selectedDate.getFullYear()
-        let month = selectedDate.getMonth() + 1
-        let day = selectedDate.getDate()
-        if (month < 10) 
-            month = '0' + month
-        if (day < 10) 
-            day = '0' + day
-        return `${year}${month}${day}`
+        setLoading(false)
     }
 
 
     useEffect(() => {
-        const dateForAPICalls = parseDateForAPICalls()
-        getFreshMatchData(dateForAPICalls)
-        // testWatchedMatchesEndpoint(dateForAPICalls)
+        getFreshMatchData()
     }, [selectedDate]);
+
+    useEffect(() => {
+        createTournamentTiles(leagues, watchedMatches)
+    }, [selectedTournaments]);
 
 
     return (
         <div className="MatchesByDay">
             <Calendar onChange={selectDate} value={selectedDate}  />
             
+        {loading ?
+            <LoadingSpinner />
+            :
             <MatchList 
-                watchedMatches={watchedMatches}
-                leagues={leagues}
+                // watchedMatches={watchedMatches}
+                // leagues={leagues}
                 selectedDate={selectedDate}
-                selectedTournaments={selectedTournaments}/>
+                // selectedTournaments={selectedTournaments}
+                tournamentTiles={tournamentTiles}/>
+
+        }
 
             <TournamentList
                 leagues={leagues}
+                selectedTournaments={selectedTournaments}
                 setSelectedTournaments={setSelectedTournaments}
                 />
         </div>
