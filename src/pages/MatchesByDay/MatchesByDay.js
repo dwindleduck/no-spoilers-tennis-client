@@ -12,6 +12,7 @@ import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 export default function MatchesByDay() {
     const [selectedDate, selectDate] = useState(new Date());
+    const [lastUpdated, setLastUpdated] = useState(new Date())
     const [selectedTournaments, setSelectedTournaments] = useState([])
     const [watchedMatches, setWatchedMatches] = useState(null)
     const [leagues, setLeagues] = useState([])
@@ -95,15 +96,19 @@ export default function MatchesByDay() {
         //sort watch cards by ascending date_time
         const sortedMatches = completeWatchList.sort( (a, b) =>
             (Date.parse(a.match.date_time) - Date.parse(b.match.date_time))
-        || (b.match.T1name - a.match.T1name)
+        // || (b.match.T1name - a.match.T1name)
+        || a.match.T1name.localeCompare(b.match.T1name, 'en', { numeric: true })
         )
 
+        // sortedMatches.sort((a, b) => a.match.T1name.localeCompare(b.match.T1name, 'en', { numeric: true }));
+
+        setLastUpdated(new Date(sortedMatches[0].match.updated_at))
         // create TournamentTiles
         createTournamentTiles(listOfLeagues, sortedMatches)
 
         setLeagues(listOfLeagues)
         setWatchedMatches(sortedMatches)
-
+        
         setLoading(false)
     }
 
@@ -134,6 +139,7 @@ export default function MatchesByDay() {
                 // watchedMatches={watchedMatches}
                 // leagues={leagues}
                 selectedDate={selectedDate}
+                lastUpdated={lastUpdated}
                 // selectedTournaments={selectedTournaments}
                 tournamentTiles={tournamentTiles}/>
 
