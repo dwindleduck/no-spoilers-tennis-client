@@ -1,4 +1,5 @@
 import TournamentList from "../../components/TournamentList/TournamentList"
+import LeagueSelector from "../../components/LeagueSelector/LeagueSelector";
 import MatchList from "../../components/MatchList/MatchList"
 import TournamentTile from "../../components/TournamentTile/TournamentTile";
 import "./MatchesByDay.css";
@@ -61,6 +62,7 @@ export default function MatchesByDay() {
     function createTournamentTiles(leagues, matches) {
         const tournamentTilesForState = []
 
+        console.log(leagues)
         // Iterate over leagues
         leagues.forEach(league => {
             league.tournamentList.forEach(tournament => {
@@ -96,11 +98,8 @@ export default function MatchesByDay() {
         //sort watch cards by ascending date_time
         const sortedMatches = completeWatchList.sort( (a, b) =>
             (Date.parse(a.match.date_time) - Date.parse(b.match.date_time))
-        // || (b.match.T1name - a.match.T1name)
         || a.match.T1name.localeCompare(b.match.T1name, 'en', { numeric: true })
         )
-
-        // sortedMatches.sort((a, b) => a.match.T1name.localeCompare(b.match.T1name, 'en', { numeric: true }));
 
         setLastUpdated(new Date(sortedMatches[0].match.updated_at))
         // create TournamentTiles
@@ -136,17 +135,12 @@ export default function MatchesByDay() {
             <LoadingSpinner />
             :
             <MatchList 
-                // watchedMatches={watchedMatches}
-                // leagues={leagues}
                 selectedDate={selectedDate}
                 lastUpdated={lastUpdated}
-                // selectedTournaments={selectedTournaments}
                 tournamentTiles={tournamentTiles}/>
 
         }
-
-            <TournamentList
-                leagues={leagues}
+            <LeagueSelector leagues={leagues}
                 selectedTournaments={selectedTournaments}
                 setSelectedTournaments={setSelectedTournaments}
                 />

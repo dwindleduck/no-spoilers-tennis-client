@@ -1,3 +1,4 @@
+import "./MatchList.css"
 
 export default function MatchList({
     selectedDate,
@@ -22,13 +23,15 @@ export default function MatchList({
 
 
 
-    console.log(lastUpdated)
+    // console.log(lastUpdated)
 
     return(
         <div className="MatchList">
             <div className="PageTitle">
                 {/* <p>{dateForPageTitle}</p> */}
-                <p>Matches on {parsedSelectedDate} last updated {parsedLastUpdated}</p>
+                <p>{parsedSelectedDate}</p>
+                
+                <p id="last-updated">matches for this day last updated {parsedLastUpdated}</p>
             </div>
             
             {/* Tournaments */}

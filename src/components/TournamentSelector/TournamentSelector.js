@@ -4,34 +4,41 @@ export default function TournamentSelector({
 }) {
    
     function handleSelectTournament() {
-        const targetLeague = selectedTournaments.filter(selectedLeague => selectedLeague.leagueName === league.leagueName)
+        const listForState = selectedTournaments.map(item => item)
 
-        // if the league has been selected, check it's tournamentList
-        if (targetLeague.length === 1) {
-            const targetTournamentIndex = targetLeague[0].tournamentList.indexOf(tournament)
-            
-            // if SELECTED & the last tourn. in the list, remove the league
-            if (targetTournamentIndex > -1 && targetLeague[0].tournamentList.length === 1) {
-                // filter for not the target league
-                const reducedList = selectedTournaments.filter(eachLeague => eachLeague.leagueName !== league.leagueName)
-                setSelectedTournaments(reducedList)
-            }
-            // else if SELECTED - remove just the tournament from the list
-            else if (targetTournamentIndex > -1) {
-                targetLeague[0].tournamentList.splice(targetTournamentIndex, 1)
-                setSelectedTournaments([...selectedTournaments, targetLeague])
-            }
-            // else NOT SELECTED - add it to the list
-            else {
-                targetLeague[0].tournamentList.push(tournament)
-                setSelectedTournaments([...selectedTournaments, targetLeague])
-            }
-        // else add a new league to selectedTournaments  
-        } else {  
+        const targetLeagueIndex = listForState.findIndex(selectedLeague => selectedLeague.leagueName === league.leagueName)
+
+        //league not found, so create it
+        if (targetLeagueIndex === -1) {
+            console.log("league not found, so create it")
             setSelectedTournaments([...selectedTournaments, {
                 leagueName: league.leagueName,
                 tournamentList: [tournament]
             }])
+        //league found, tournamentList will be at least one item
+        } else { 
+           const targetTournamentIndex = listForState[targetLeagueIndex].tournamentList.indexOf(tournament)
+
+            //tournament not selected
+            if (targetTournamentIndex === -1) {
+                console.log("tournament not selected, add it to the list")
+                //add it to the list
+                listForState[targetLeagueIndex].tournamentList.push(tournament)
+            }
+            //tournament selected and last in the list
+            else if (listForState[targetLeagueIndex].tournamentList.length === 1) {
+                console.log("tournament selected and last in the list, remove the whole league")
+                //remove the whole league
+                listForState.splice(targetLeagueIndex, 1)
+            }
+            //tournament selected
+            else {
+                console.log("tournament selected, remove it from the list")
+                //remove the tournament from the list
+                listForState[targetLeagueIndex].tournamentList.splice(targetTournamentIndex, 1)
+            }
+            console.log(listForState)
+            setSelectedTournaments(listForState)
         }
     }
 
@@ -39,7 +46,6 @@ export default function TournamentSelector({
     return(
         <>
             <li onClick={handleSelectTournament}>{tournament}</li>
-            <p>{league.leagueName}</p>
             {/* <button value={tournament} onClick={handleClick}>{isFollowingCategory ? "Unfollow" : "Follow"}</button> */}
         </>
     )

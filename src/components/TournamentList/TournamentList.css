@@ -1,13 +1,29 @@
 .TournamentList {
     text-align: left;
-
+    background-color: rgb(130 130 130 / 84%);
+    padding: 3px;
+    margin-bottom: 15px;
+}
+.TournamentList h5 {
+    margin: 3px;
+    text-align: center;
 }
 .TournamentList ul {
     /* display: grid;
     grid-template-columns: 4fr 1fr;
     gap: 3px; */
-    padding-left: 10px;
+    padding-left: 0px;
+    margin: 0;
 }
 .TournamentList ul li{
     list-style-type: none;
+    background-color:  rgba(197, 197, 197, 0.839);
+    margin: 5px 3px;
+}
+
+.TournamentList ul li:hover{
+    cursor: pointer;
+    /* list-style-type: none;
+    background-color:  rgba(197, 197, 197, 0.839);
+    margin: 5px 3px; */
 }
