@@ -64,7 +64,7 @@ export default function MatchesByDay() {
         leagues.forEach(league => {
             league.tournamentList.forEach(tournament => {
                 // Check if it is a selected tournament OR all are selected
-                    if(selectedTournaments.includes(tournament) || selectedTournaments.length === 0) {
+                    // if(selectedTournaments.includes(tournament) || selectedTournaments.length === 0) {
                         // add it to tournamentTilesForState
                         tournamentTilesForState.push(
                             <TournamentTile
@@ -74,7 +74,7 @@ export default function MatchesByDay() {
                                 listOfMatches={matches.filter(card => card.match.league === league.leagueName && card.match.competition === tournament)}
                             />
                         )
-                    }
+                    // }
             })
         })
         setTournamentTiles(tournamentTilesForState)
@@ -113,7 +113,13 @@ export default function MatchesByDay() {
     }, [selectedDate]);
 
     useEffect(() => {
-        createTournamentTiles(leagues, watchedMatches)
+        if(selectedTournaments.length === 0){
+            //create tiles using all tournaments
+            createTournamentTiles(leagues, watchedMatches)
+        } else {
+            //create tiles using selected tournaments
+            createTournamentTiles(selectedTournaments, watchedMatches)
+        }
     }, [selectedTournaments]);
 
 
