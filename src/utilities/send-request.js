@@ -1,7 +1,7 @@
 import { getToken } from "./users-service"
 
-// const BASE_URL = "https://no-spoilers-server.onrender.com"
-const BASE_URL = "http://127.0.0.1:8000"
+const BASE_URL = "https://no-spoilers-server.onrender.com"
+
 
 
 export default async function sendRequest(url, method="GET", payload=null) {

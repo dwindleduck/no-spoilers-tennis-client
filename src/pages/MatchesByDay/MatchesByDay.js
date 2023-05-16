@@ -1,4 +1,3 @@
-import TournamentList from "../../components/TournamentList/TournamentList"
 import LeagueSelector from "../../components/LeagueSelector/LeagueSelector";
 import MatchList from "../../components/MatchList/MatchList"
 import TournamentTile from "../../components/TournamentTile/TournamentTile";
@@ -6,7 +5,6 @@ import "./MatchesByDay.css";
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css';
 import { useState, useEffect } from "react"
-import * as matchesAPI from "../../utilities/matches-api"
 import * as watchedMatchesAPI from "../../utilities/watched-matches-api"
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
@@ -62,22 +60,18 @@ export default function MatchesByDay() {
     function createTournamentTiles(leagues, matches) {
         const tournamentTilesForState = []
 
-        console.log(leagues)
+        // console.log(leagues)
         // Iterate over leagues
         leagues.forEach(league => {
             league.tournamentList.forEach(tournament => {
-                // Check if it is a selected tournament OR all are selected
-                    // if(selectedTournaments.includes(tournament) || selectedTournaments.length === 0) {
-                        // add it to tournamentTilesForState
-                        tournamentTilesForState.push(
-                            <TournamentTile
-                                key={tournamentTilesForState.length}
-                                league={league}
-                                tournament={tournament}
-                                listOfMatches={matches.filter(card => card.match.league === league.leagueName && card.match.competition === tournament)}
-                            />
-                        )
-                    // }
+                tournamentTilesForState.push(
+                    <TournamentTile
+                        key={tournamentTilesForState.length}
+                        league={league}
+                        tournament={tournament}
+                        listOfMatches={matches.filter(card => card.match.league === league.leagueName && card.match.competition === tournament)}
+                    />
+                )
             })
         })
         setTournamentTiles(tournamentTilesForState)
@@ -107,7 +101,8 @@ export default function MatchesByDay() {
 
         setLeagues(listOfLeagues)
         setWatchedMatches(sortedMatches)
-        
+        // console.log(sortedMatches)
+
         setLoading(false)
     }
 
@@ -117,6 +112,7 @@ export default function MatchesByDay() {
     }, [selectedDate]);
 
     useEffect(() => {
+        // if no tournaments are selected
         if(selectedTournaments.length === 0){
             //create tiles using all tournaments
             createTournamentTiles(leagues, watchedMatches)
