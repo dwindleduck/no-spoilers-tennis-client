@@ -27,8 +27,12 @@ export async function logOut(credentials) {
         const logoutTest = await usersAPI.logout(credentials)
         //remove token
         localStorage.removeItem("token")
-        return console.log("logged out")
-    } else { return console.log("no user to log out")}
+        // return console.log("logged out")
+        return true
+    } else { 
+        // return console.log("no user to log out")
+        return false
+    }
 }
 
 export async function login(credentials) {

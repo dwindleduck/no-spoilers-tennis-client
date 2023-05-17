@@ -110,9 +110,7 @@ export default function MatchesByDay() {
             setLastUpdated(null)
             setLeagues([])
             setWatchedMatches([])
-            
         }
-
         setLoading(false)
     }
 
