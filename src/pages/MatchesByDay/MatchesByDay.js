@@ -11,7 +11,7 @@ import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 export default function MatchesByDay() {
     const [selectedDate, selectDate] = useState(new Date());
-    const [lastUpdated, setLastUpdated] = useState(new Date())
+    const [lastUpdated, setLastUpdated] = useState(null)
     const [selectedTournaments, setSelectedTournaments] = useState([])
     const [watchedMatches, setWatchedMatches] = useState(null)
     const [leagues, setLeagues] = useState([])
@@ -78,6 +78,7 @@ export default function MatchesByDay() {
     }
     
     async function getFreshMatchData() {
+        // console.log("Getting Fresh Match Data")
         // activate loading spinner
         setLoading(true)
 
@@ -86,22 +87,31 @@ export default function MatchesByDay() {
         // API call to get watch cards for the selected date
         const completeWatchList = await watchedMatchesAPI.create_and_get(dateForAPICalls)
 
-        // save unique competition names
-        const listOfLeagues = getUniqueCompetitions(completeWatchList)
- 
-        //sort watch cards by ascending date_time
-        const sortedMatches = completeWatchList.sort( (a, b) =>
-            (Date.parse(a.match.date_time) - Date.parse(b.match.date_time))
-        || a.match.T1name.localeCompare(b.match.T1name, 'en', { numeric: true })
-        )
 
-        setLastUpdated(new Date(sortedMatches[0].match.updated_at))
-        // create TournamentTiles
-        createTournamentTiles(listOfLeagues, sortedMatches)
+        // if there are matches returned
+        if (completeWatchList.length > 0) {
+            // save unique competition names
+            const listOfLeagues = getUniqueCompetitions(completeWatchList)
 
-        setLeagues(listOfLeagues)
-        setWatchedMatches(sortedMatches)
-        // console.log(sortedMatches)
+            //sort watch cards by ascending date_time
+            const sortedMatches = completeWatchList.sort( (a, b) =>
+                (Date.parse(a.match.date_time) - Date.parse(b.match.date_time))
+            || a.match.T1name.localeCompare(b.match.T1name, 'en', { numeric: true })
+            )
+
+            // create TournamentTiles
+            createTournamentTiles(listOfLeagues, sortedMatches)
+            setLastUpdated(new Date(sortedMatches[0].match.updated_at))
+            setLeagues(listOfLeagues)
+            setWatchedMatches(sortedMatches)
+        } else {
+        // no matches this day, reset state
+            setTournamentTiles([])
+            setLastUpdated(null)
+            setLeagues([])
+            setWatchedMatches([])
+            
+        }
 
         setLoading(false)
     }

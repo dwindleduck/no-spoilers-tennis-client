@@ -12,13 +12,16 @@ export default function MatchList({
         day: 'numeric'
     })
     
+    let parsedLastUpdated = undefined
     //parse date for last updated message
-    const parsedLastUpdated = lastUpdated.toLocaleDateString(undefined, { 
-        month: 'numeric',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-    })
+    if (tournamentTiles.length > 0){
+        parsedLastUpdated = lastUpdated.toLocaleDateString(undefined, { 
+            month: 'numeric',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+        })
+    }
 
 
 
@@ -31,7 +34,11 @@ export default function MatchList({
                 {/* <p>{dateForPageTitle}</p> */}
                 <p>{parsedSelectedDate}</p>
                 
-                <p id="last-updated">matches for this day last updated {parsedLastUpdated}</p>
+                {tournamentTiles.length === 0 ?
+                    <p>No matches today</p>
+                    :
+                    <p id="last-updated">matches for this day last updated {parsedLastUpdated}</p>
+                }
             </div>
             
             {/* Tournaments */}

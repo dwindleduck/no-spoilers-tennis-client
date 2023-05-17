@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import * as usersService from '../../utilities/users-service';
 import "../../pages/AuthPage/AuthPage.css"
+
+import DemoLoginButton from '../../components/DemoLoginButton/DemoLoginButton'
  
 export default function LoginForm({ setUser }) {
   const [credentials, setCredentials] = useState({
@@ -48,6 +50,7 @@ export default function LoginForm({ setUser }) {
         </form>
       </div>
       <p className="error-message">&nbsp;{error}</p>
+      <DemoLoginButton setUser={setUser} />
     </div>
   );
 }
