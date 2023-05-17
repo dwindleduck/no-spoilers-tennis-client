@@ -24,14 +24,9 @@ export default function MatchList({
     }
 
 
-
-
-    // console.log(lastUpdated)
-
     return(
         <div className="MatchList">
             <div className="PageTitle">
-                {/* <p>{dateForPageTitle}</p> */}
                 <p>{parsedSelectedDate}</p>
                 
                 {tournamentTiles.length === 0 ?
