@@ -1,3 +1,4 @@
+import "./TournamentTile.css";
 import MatchDetails from "../MatchDetails/MatchDetails"
 
 export default function TournamentTile({

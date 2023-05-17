@@ -1,17 +1,17 @@
-import TournamentList from "../../components/TournamentList/TournamentList"
+import LeagueSelector from "../../components/LeagueSelector/LeagueSelector";
 import MatchList from "../../components/MatchList/MatchList"
 import TournamentTile from "../../components/TournamentTile/TournamentTile";
 import "./MatchesByDay.css";
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css';
 import { useState, useEffect } from "react"
-import * as matchesAPI from "../../utilities/matches-api"
 import * as watchedMatchesAPI from "../../utilities/watched-matches-api"
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 
 export default function MatchesByDay() {
     const [selectedDate, selectDate] = useState(new Date());
+    const [lastUpdated, setLastUpdated] = useState(null)
     const [selectedTournaments, setSelectedTournaments] = useState([])
     const [watchedMatches, setWatchedMatches] = useState(null)
     const [leagues, setLeagues] = useState([])
@@ -60,27 +60,25 @@ export default function MatchesByDay() {
     function createTournamentTiles(leagues, matches) {
         const tournamentTilesForState = []
 
+        // console.log(leagues)
         // Iterate over leagues
         leagues.forEach(league => {
             league.tournamentList.forEach(tournament => {
-                // Check if it is a selected tournament OR all are selected
-                    if(selectedTournaments.includes(tournament) || selectedTournaments.length === 0) {
-                        // add it to tournamentTilesForState
-                        tournamentTilesForState.push(
-                            <TournamentTile
-                                key={tournamentTilesForState.length}
-                                league={league}
-                                tournament={tournament}
-                                listOfMatches={matches.filter(card => card.match.league === league.leagueName && card.match.competition === tournament)}
-                            />
-                        )
-                    }
+                tournamentTilesForState.push(
+                    <TournamentTile
+                        key={tournamentTilesForState.length}
+                        league={league}
+                        tournament={tournament}
+                        listOfMatches={matches.filter(card => card.match.league === league.leagueName && card.match.competition === tournament)}
+                    />
+                )
             })
         })
         setTournamentTiles(tournamentTilesForState)
     }
     
     async function getFreshMatchData() {
+        // console.log("Getting Fresh Match Data")
         // activate loading spinner
         setLoading(true)
 
@@ -89,20 +87,31 @@ export default function MatchesByDay() {
         // API call to get watch cards for the selected date
         const completeWatchList = await watchedMatchesAPI.create_and_get(dateForAPICalls)
 
-        // save unique competition names
-        const listOfLeagues = getUniqueCompetitions(completeWatchList)
- 
-        //sort watch cards by ascending date_time
-        const sortedMatches = completeWatchList.sort( (a, b) =>
-            (Date.parse(a.match.date_time) - Date.parse(b.match.date_time))
-        || (b.match.T1name - a.match.T1name)
-        )
 
-        // create TournamentTiles
-        createTournamentTiles(listOfLeagues, sortedMatches)
+        // if there are matches returned
+        if (completeWatchList.length > 0) {
+            // save unique competition names
+            const listOfLeagues = getUniqueCompetitions(completeWatchList)
 
-        setLeagues(listOfLeagues)
-        setWatchedMatches(sortedMatches)
+            //sort watch cards by ascending date_time
+            const sortedMatches = completeWatchList.sort( (a, b) =>
+                (Date.parse(a.match.date_time) - Date.parse(b.match.date_time))
+            || a.match.T1name.localeCompare(b.match.T1name, 'en', { numeric: true })
+            )
+
+            // create TournamentTiles
+            createTournamentTiles(listOfLeagues, sortedMatches)
+            setLastUpdated(new Date(sortedMatches[0].match.updated_at))
+            setLeagues(listOfLeagues)
+            setWatchedMatches(sortedMatches)
+        } else {
+        // no matches this day, reset state
+            setTournamentTiles([])
+            setLastUpdated(null)
+            setLeagues([])
+            setWatchedMatches([])
+            
+        }
 
         setLoading(false)
     }
@@ -113,7 +122,14 @@ export default function MatchesByDay() {
     }, [selectedDate]);
 
     useEffect(() => {
-        createTournamentTiles(leagues, watchedMatches)
+        // if no tournaments are selected
+        if(selectedTournaments.length === 0){
+            //create tiles using all tournaments
+            createTournamentTiles(leagues, watchedMatches)
+        } else {
+            //create tiles using selected tournaments
+            createTournamentTiles(selectedTournaments, watchedMatches)
+        }
     }, [selectedTournaments]);
 
 
@@ -125,16 +141,12 @@ export default function MatchesByDay() {
             <LoadingSpinner />
             :
             <MatchList 
-                // watchedMatches={watchedMatches}
-                // leagues={leagues}
                 selectedDate={selectedDate}
-                // selectedTournaments={selectedTournaments}
+                lastUpdated={lastUpdated}
                 tournamentTiles={tournamentTiles}/>
 
         }
-
-            <TournamentList
-                leagues={leagues}
+            <LeagueSelector leagues={leagues}
                 selectedTournaments={selectedTournaments}
                 setSelectedTournaments={setSelectedTournaments}
                 />
