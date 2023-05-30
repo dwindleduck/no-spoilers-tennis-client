@@ -3,7 +3,7 @@ import { useState } from "react"
 
 import * as watchedMatchesAPI from "../../utilities/watched-matches-api"
 
-export default function MatchDetails({match, watchedMatches}) {
+export default function MatchDetails({match}) {
 
    const matchDetails = match.match
     const [shouldSpoil, setShouldSpoil] = useState(match.spoil_results)
@@ -34,6 +34,11 @@ export default function MatchDetails({match, watchedMatches}) {
     };
     const dateObject = new Date(matchDetails.date_time)
     const timeForMatchDetails = dateObject.toLocaleTimeString(undefined, options)
+
+    console.log(matchDetails.T1name)
+    console.log(matchDetails.date_time)
+    console.log(dateObject)
+    console.log(timeForMatchDetails)
 
 
 

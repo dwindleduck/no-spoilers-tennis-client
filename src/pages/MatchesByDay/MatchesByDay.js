@@ -60,7 +60,6 @@ export default function MatchesByDay() {
     function createTournamentTiles(leagues, matches) {
         const tournamentTilesForState = []
 
-        // console.log(leagues)
         // Iterate over leagues
         leagues.forEach(league => {
             league.tournamentList.forEach(tournament => {
@@ -77,10 +76,11 @@ export default function MatchesByDay() {
         setTournamentTiles(tournamentTilesForState)
     }
     
+    
     async function getFreshMatchData() {
-        // console.log("Getting Fresh Match Data")
+        console.log("Getting Fresh Match Data")
         // activate loading spinner
-        setLoading(true)
+
 
         const dateForAPICalls = parseDateForAPICalls()
 
@@ -106,16 +106,21 @@ export default function MatchesByDay() {
             setWatchedMatches(sortedMatches)
         } else {
         // no matches this day, reset state
-            setTournamentTiles([])
-            setLastUpdated(null)
-            setLeagues([])
-            setWatchedMatches([])
+            // setTournamentTiles([])
+            // setLastUpdated(null)
+            // setLeagues([])
+            // setWatchedMatches([])
         }
         setLoading(false)
     }
 
 
     useEffect(() => {
+        setLoading(true)
+        setTournamentTiles([])
+        setLastUpdated(null)
+        setLeagues([])
+        setWatchedMatches([])
         getFreshMatchData()
     }, [selectedDate]);
 

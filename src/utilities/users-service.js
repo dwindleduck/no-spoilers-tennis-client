@@ -1,7 +1,7 @@
 import * as usersAPI from "./users-api"
 
 export async function signUp(userData) {
-    const token = await usersAPI.signUp(userData)
+    await usersAPI.signUp(userData)
     return login(userData)
 }
 
@@ -24,7 +24,7 @@ export function getUser() {
 export async function logOut(credentials) {
     if(credentials) {
         //DELETE user session
-        const logoutTest = await usersAPI.logout(credentials)
+        await usersAPI.logout(credentials)
         //remove token
         localStorage.removeItem("token")
         // return console.log("logged out")
