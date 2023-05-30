@@ -2,6 +2,7 @@ import { useState } from 'react'
 import SignUpForm from "../../components/SignUpForm/SignUpForm"
 import LoginForm from "../../components/LoginForm/LoginForm"
 import "./AuthPage.css"
+import { Link } from "react-router-dom";
 
 export default function AuthPage({ setUser }) {
     
@@ -17,12 +18,14 @@ export default function AuthPage({ setUser }) {
             {showSignUp ? (
                 <>
                     <SignUpForm setUser={setUser} />
-                    <p>Already have an account? Login <a className="authpage-link" onClick={handleSwitchForms} href="">here</a></p>
+
+                    <p>Already have an account? <Link to="" onClick={handleSwitchForms} className="authpage-link">Login here</Link></p>
                 </>
             ) : (
                 <>
                     <LoginForm setUser={setUser} />
-                    <p>First time here? Sign up <a className="authpage-link" onClick={handleSwitchForms} href="">here</a></p>
+
+                    <p>First time here? <Link to="" onClick={handleSwitchForms} className="authpage-link">Sign up here</Link></p>
                 </>
             )}
         </>
