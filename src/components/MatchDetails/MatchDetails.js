@@ -35,12 +35,6 @@ export default function MatchDetails({match}) {
     const dateObject = new Date(matchDetails.date_time)
     const timeForMatchDetails = dateObject.toLocaleTimeString(undefined, options)
 
-    console.log(matchDetails.T1name)
-    console.log(matchDetails.date_time)
-    console.log(dateObject)
-    console.log(timeForMatchDetails)
-
-
 
     return(
         <div className="MatchDetails">

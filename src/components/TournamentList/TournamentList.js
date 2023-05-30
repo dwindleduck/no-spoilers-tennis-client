@@ -1,11 +1,7 @@
 import TournamentSelector from "../TournamentSelector/TournamentSelector"
 import "./TournamentList.css"
 
-export default function TournamentList({
-    league,
-    selectedTournaments,
-    setSelectedTournaments
-}) {
+export default function TournamentList({league}) {
    
     const tournamentSelectors = []
     
@@ -15,14 +11,9 @@ export default function TournamentList({
                 key={tournamentSelectors.length}
                 league={league}
                 tournament={tournament}
-                selectedTournaments={selectedTournaments}
-                setSelectedTournaments={setSelectedTournaments}
                 />
         )
     })
-    
-    
-
    
     return (
         <div className="TournamentList">

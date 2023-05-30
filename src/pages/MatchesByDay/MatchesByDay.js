@@ -12,8 +12,7 @@ import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 export default function MatchesByDay() {
     const [selectedDate, selectDate] = useState(new Date());
     const [lastUpdated, setLastUpdated] = useState(null)
-    const [selectedTournaments, setSelectedTournaments] = useState([])
-    const [watchedMatches, setWatchedMatches] = useState(null)
+    // const [watchedMatches, setWatchedMatches] = useState(null)
     const [leagues, setLeagues] = useState([])
     const [loading, setLoading] = useState(true);
     const [tournamentTiles, setTournamentTiles] = useState([])
@@ -78,9 +77,7 @@ export default function MatchesByDay() {
     
     
     async function getFreshMatchData() {
-        console.log("Getting Fresh Match Data")
-        // activate loading spinner
-
+        // console.log("Getting Fresh Match Data")
 
         const dateForAPICalls = parseDateForAPICalls()
 
@@ -103,7 +100,7 @@ export default function MatchesByDay() {
             createTournamentTiles(listOfLeagues, sortedMatches)
             setLastUpdated(new Date(sortedMatches[0].match.updated_at))
             setLeagues(listOfLeagues)
-            setWatchedMatches(sortedMatches)
+            // setWatchedMatches(sortedMatches)
         } else {
         // no matches this day, reset state
             // setTournamentTiles([])
@@ -116,43 +113,46 @@ export default function MatchesByDay() {
 
 
     useEffect(() => {
+        // activate loading spinner
         setLoading(true)
+        
         setTournamentTiles([])
         setLastUpdated(null)
         setLeagues([])
-        setWatchedMatches([])
+        // setWatchedMatches([])
         getFreshMatchData()
     }, [selectedDate]);
 
-    useEffect(() => {
-        // if no tournaments are selected
-        if(selectedTournaments.length === 0){
-            //create tiles using all tournaments
-            createTournamentTiles(leagues, watchedMatches)
-        } else {
-            //create tiles using selected tournaments
-            createTournamentTiles(selectedTournaments, watchedMatches)
-        }
-    }, [selectedTournaments]);
 
+    function doNothing() {
+        // console.log("doing nothing")
+    }
 
     return (
         <div className="MatchesByDay">
-            <Calendar onChange={selectDate} value={selectedDate}  />
+            <Calendar value={selectedDate}
+                    calendarType={"US"}
+                    onChange={selectDate}
+                    tileDisabled={loading ? 
+                        ({date}) => [0, 1, 2, 3, 4, 5, 6 ].includes(date.getDay())
+                        :
+                        doNothing
+                        }
+                    />
             
-        {loading ?
-            <LoadingSpinner />
-            :
-            <MatchList 
-                selectedDate={selectedDate}
-                lastUpdated={lastUpdated}
-                tournamentTiles={tournamentTiles}/>
+            {loading ?
+                <LoadingSpinner />
+                :
+                <>
+                
+                <MatchList 
+                    selectedDate={selectedDate}
+                    lastUpdated={lastUpdated}
+                    tournamentTiles={tournamentTiles}/>
 
-        }
-            <LeagueSelector leagues={leagues}
-                selectedTournaments={selectedTournaments}
-                setSelectedTournaments={setSelectedTournaments}
-                />
+                <LeagueSelector leagues={leagues}/>
+                </>
+            }
         </div>
     )
 }

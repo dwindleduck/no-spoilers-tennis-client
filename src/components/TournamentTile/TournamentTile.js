@@ -12,7 +12,7 @@ export default function TournamentTile({
     ))
 
     return(
-        <div className="TournamentTile">
+        <div className="TournamentTile" id={tournament+league.leagueName}>
             <h4>{tournament}</h4>
             <h5>{league.leagueName}</h5>
             {matches}
