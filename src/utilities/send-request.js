@@ -1,8 +1,5 @@
 import { getToken } from "./users-service"
-
-const BASE_URL = "https://no-spoilers-server.onrender.com"
-
-
+const BASE_URL = process.env.REACT_APP_REQUEST_URL
 
 export default async function sendRequest(url, method="GET", payload=null) {
     const options = { method }
