@@ -13,6 +13,7 @@ export default function DemoLoginButton({setUser}) {
         event.preventDefault()
         try {
             const user = await usersService.login(credentials);
+            //user is just the token
             setUser(user);
           } catch {
             setError('Log In Failed - Try Again');
