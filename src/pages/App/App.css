@@ -19,3 +19,13 @@ a {
   align-items: center;
   margin-bottom: 40px;
 }
+
+ /* For screens under 600px wide */
+@media (max-width:600px) { 
+  .App {
+    
+  }
+  .Header {
+    grid-template-columns: 1fr;
+  }
+}

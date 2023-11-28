@@ -15,6 +15,8 @@ export function getToken() {
 export function getUser() {
     const token = getToken()
     if(token){
+        //make an API call to see if the token matches a currently logged in user
+        
         return token
     } else {
         return null

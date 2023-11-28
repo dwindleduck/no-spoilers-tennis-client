@@ -130,28 +130,26 @@ export default function MatchesByDay() {
 
     return (
         <div className="MatchesByDay">
-            <Calendar value={selectedDate}
-                    calendarType={"US"}
-                    onChange={selectDate}
-                    tileDisabled={loading ? 
-                        ({date}) => [0, 1, 2, 3, 4, 5, 6 ].includes(date.getDay())
-                        :
-                        doNothing
-                        }
-                    />
-            
+            <div id="SideBar">
+                <Calendar value={selectedDate}
+                        calendarType={"US"}
+                        onChange={selectDate}
+                        tileDisabled={loading ? 
+                            ({date}) => [0, 1, 2, 3, 4, 5, 6 ].includes(date.getDay())
+                            :
+                            doNothing
+                            }
+                        />
+                <LeagueSelector leagues={leagues}/>
+            </div>
+
             {loading ?
                 <LoadingSpinner />
                 :
-                <>
-                
                 <MatchList 
                     selectedDate={selectedDate}
                     lastUpdated={lastUpdated}
                     tournamentTiles={tournamentTiles}/>
-
-                <LeagueSelector leagues={leagues}/>
-                </>
             }
         </div>
     )

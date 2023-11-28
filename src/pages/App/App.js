@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import './App.css';
 
@@ -25,8 +25,8 @@ export default function App() {
           <Header handleLogOut={handleLogOut}/>
   
           <Routes>
-            <Route path="/matches" element={<MatchesByDay />} />
-            <Route path="*" element={<Navigate to="/matches" />} />
+            <Route path="/" element={<MatchesByDay />} />
+            <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </>
       ) : (
