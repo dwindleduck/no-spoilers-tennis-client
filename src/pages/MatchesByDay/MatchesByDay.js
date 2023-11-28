@@ -140,22 +140,16 @@ export default function MatchesByDay() {
                             doNothing
                             }
                         />
-                
                 <LeagueSelector leagues={leagues}/>
             </div>
 
             {loading ?
                 <LoadingSpinner />
                 :
-                <>
-                
                 <MatchList 
                     selectedDate={selectedDate}
                     lastUpdated={lastUpdated}
                     tournamentTiles={tournamentTiles}/>
-
-                {/* <LeagueSelector leagues={leagues}/> */}
-                </>
             }
         </div>
     )
