@@ -2,14 +2,38 @@
     display: grid;
     grid-template-columns: 1fr 4fr;
     gap: 30px;
+    grid-auto-flow: row;
+}
+#SideBar {
+    max-width: 250px;
+    margin: 0 auto 
 }
 .MatchesByDay .react-calendar {
-    width: 250px;
+    max-width: 250px;
+    margin: 0 auto 15px;
+}
+.LeagueSelector {
 }
 .MatchList {
-    grid-row: span 3;
 }
 .MatchList .PageTitle {
     display: grid;
     grid-template-columns: 1fr 6fr;
 }
+
+ /* For screens under 600px wide */
+ @media (max-width:600px) { 
+    .MatchesByDay {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    .MatchesByDay .react-calendar {
+        width: 100%;
+    }
+    .MatchList {
+        grid-row: span 1;
+    }
+    .MatchList .PageTitle {
+        grid-template-columns: 1fr;
+    }
+  }
