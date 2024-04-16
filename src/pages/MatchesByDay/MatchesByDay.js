@@ -116,9 +116,11 @@ export default function MatchesByDay() {
         // activate loading spinner
         setLoading(true)
         
+        // why do we need these three resets?
         setTournamentTiles([])
         setLastUpdated(null)
         setLeagues([])
+        
         // setWatchedMatches([])
         getFreshMatchData()
     }, [selectedDate]);
